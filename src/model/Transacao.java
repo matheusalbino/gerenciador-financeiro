@@ -1,20 +1,26 @@
 package model;
 
+import model.enums.TipoTransacao;
+
+import java.util.Date;
+
 public class Transacao {
     private int id;
     private int userid;
     private Categoria categoria;
     private double valor;
-    private String data;
+    private Date data;
     private String descricao;
+    private TipoTransacao tipo;
 
-    public Transacao(int id, int userid, Categoria categoria, double valor, String data, String descricao){
+    public Transacao(int id, int userid, Categoria categoria, double valor, Date data, String descricao, TipoTransacao tipo){
         this.id = id;
         this.userid = userid;
         this.categoria = categoria;
         this.valor = valor;
         this.data = data;
         this.descricao = descricao;
+        this.tipo = tipo;
     }
 
     // Getters e setters
@@ -46,10 +52,10 @@ public class Transacao {
         this.valor = valor;
     }
 
-    public String getData(){
+    public Date getData(){
         return data;
     }
-    public void setData(String data){
+    public void setData(Date data){
         this.data = data;
     }
 
@@ -58,5 +64,13 @@ public class Transacao {
     }
     public void setDescricao(String descricao){
         this.descricao = descricao;
+    }
+
+    public TipoTransacao getTipoTransacao() {
+        return tipo;
+    }
+
+    public void setTipoTransacao(TipoTransacao tipo) {
+        this.tipo = tipo;
     }
 }

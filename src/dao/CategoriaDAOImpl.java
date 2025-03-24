@@ -48,4 +48,14 @@ public class CategoriaDAOImpl implements CategoriaDAO {
         return categoriasDoUsuario;
     }
 
+    @Override
+    public Categoria buscarCategoriaPorId(int idCategoria, int idUsuario) {
+        List<Categoria> categoriasDoUsuario = buscarCategoriasDeUsuario(idUsuario);
+        for (Categoria categoria : categoriasDoUsuario){
+            if(categoria.getId() == idCategoria){
+                return categoria;
+            }
+        }
+        return null;
+    }
 }

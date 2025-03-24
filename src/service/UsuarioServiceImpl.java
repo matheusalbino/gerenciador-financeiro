@@ -3,7 +3,7 @@ package service;
 import dao.UsuarioDAO;
 import model.Usuario;
 
-public class UsuarioServiceImpl extends UsuarioService {
+public class UsuarioServiceImpl implements UsuarioService {
     UsuarioDAO usuarioDAO;
 
     @Override
@@ -18,13 +18,9 @@ public class UsuarioServiceImpl extends UsuarioService {
 
     }
 
-
-
-
-
     @Override
     public void removerUsuario(int idUsuarioARemover) {
-
+        return;
     }
 
     @Override

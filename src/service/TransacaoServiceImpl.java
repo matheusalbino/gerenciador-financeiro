@@ -79,7 +79,7 @@ public class TransacaoServiceImpl implements TransacaoService{
     }
 
 
-    // TODO checar se o id existe para busca
+    // checar se o id existe para busca
     @Override
     public List<Transacao> buscarTransacoesPorIdUsuario(int idUsuario){
         if (usuarioDAO.buscarUsuarioPorId(idUsuario) == null){

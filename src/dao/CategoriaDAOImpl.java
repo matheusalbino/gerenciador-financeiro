@@ -11,6 +11,7 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 
     private CategoriaDAOImpl(){
         categorias = new ArrayList<>();
+
     }
 
     public static synchronized CategoriaDAOImpl getInstance(){
@@ -29,7 +30,15 @@ public class CategoriaDAOImpl implements CategoriaDAO {
     public void removerCategoria(Categoria categoria){ categorias.remove(categoria); }
 
     @Override
-    public List<Categoria> buscarCategoriasDeUsuario(int userid){
+    public void editarCategoria(Categoria categoria){
+        Categoria categoriaAEditar = buscarCategoriaPorId(categoria.getId(), categoria.getUserid());
+        categoriaAEditar.setNome(categoria.getNome());
+        categoriaAEditar.setDescricao(categoria.getDescricao());
+        categoriaAEditar.setTipo(categoria.getTipo());
+    }
+
+    @Override
+    public List<Categoria> listarCategoriasDeUsuario(int userid){
         List<Categoria> categoriasDoUsuario = new ArrayList<>();
         for (Categoria categoria : categorias){
             if (categoria.getUserid() == userid){
@@ -42,7 +51,7 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 
     @Override
     public Categoria buscarCategoriaPorId(int idCategoria, int idUsuario) {
-        List<Categoria> categoriasDoUsuario = buscarCategoriasDeUsuario(idUsuario);
+        List<Categoria> categoriasDoUsuario = listarCategoriasDeUsuario(idUsuario);
         for (Categoria categoria : categoriasDoUsuario){
             if(categoria.getId() == idCategoria){
                 return categoria;

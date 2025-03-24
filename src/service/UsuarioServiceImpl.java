@@ -40,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = buscarUsuarioPorID(idUsuarioARemover);
         // buscar as categorias e transações do usuario a ser removido
         List<Transacao> transacoesUsuario = transacaoDAO.buscarTransacoesDeUsuario(idUsuarioARemover);
-        List<Categoria> categoriasUsuario = categoriaDAO.buscarCategoriasDeUsuario(idUsuarioARemover);
+        List<Categoria> categoriasUsuario = categoriaDAO.listarCategoriasDeUsuario(idUsuarioARemover);
 
         if (usuario == null){
             throw new IllegalArgumentException("ID de usuario não encontrado");

@@ -14,7 +14,7 @@ public interface UsuarioService {
     // testar remover usuario
     // checar se id corresponde, se corresponder apagar todos os dados relacionados depois o usuario
     // remover todas as transações e categorias primeiro, depois o usuario por último
-    public void removerUsuario(int idUsuarioAremover);
+    public void removerUsuario(int idUsuarioARemover);
 
     // testar buscar por login
     // checar se username existe e retornar usuario
@@ -26,7 +26,6 @@ public interface UsuarioService {
 
     // testar login/senha
     // checar se usuario existe e comparar senhas
-    public boolean validarEntrada(String usuario, String senha);
-
+    public boolean validarLogin(String usuario, String senha);
 
 }

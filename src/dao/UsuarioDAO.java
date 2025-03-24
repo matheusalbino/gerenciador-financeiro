@@ -7,7 +7,4 @@ public interface UsuarioDAO {
     public boolean removerUsuario(int userid);
     public Usuario buscarPorLogin(String username);
     public Usuario buscarUsuarioPorId(int idUsuario);
-
-
-    // public boolean validarEntrada(String usuario, String senha);
 }

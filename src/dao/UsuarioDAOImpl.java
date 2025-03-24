@@ -25,15 +25,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public boolean removerUsuario(int userid) {
-        Usuario usuarioARemover = buscarUsuarioPorId(userid);
-
-        if (usuarioARemover != null) {
-            usuarios.remove(usuarioARemover);
-            return true;
-        }
-
-        return false;
+    public void removerUsuario(Usuario usuario) {
+        usuarios.remove(usuario);
     }
 
 

@@ -26,15 +26,7 @@ public class CategoriaDAOImpl implements CategoriaDAO {
     }
 
     @Override
-    public boolean removerCategoria(int id){
-        for (Categoria categoria : categorias){
-            if (categoria.getId() == id){
-                categorias.remove(categoria);
-                return true;
-            }
-        }
-        return false;
-    }
+    public void removerCategoria(Categoria categoria){ categorias.remove(categoria); }
 
     @Override
     public List<Categoria> buscarCategoriasDeUsuario(int userid){

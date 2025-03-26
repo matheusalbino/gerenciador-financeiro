@@ -1,7 +1,6 @@
 package controller;
 
 import model.Categoria;
-import model.enums.TipoCategoria;
 import service.CategoriaService;
 import service.CategoriaServiceImpl;
 

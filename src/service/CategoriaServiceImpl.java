@@ -3,12 +3,13 @@ package service;
 import dao.CategoriaDAO;
 import dao.CategoriaDAOImpl;
 import dao.UsuarioDAO;
+import dao.UsuarioDAOImpl;
 import model.Categoria;
 
 import java.util.List;
 
 public class CategoriaServiceImpl implements CategoriaService{
-    UsuarioDAO usuarioDAO;
+    UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
     private final CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
 
     @Override

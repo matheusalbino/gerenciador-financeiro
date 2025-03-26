@@ -1,6 +1,5 @@
 package model;
 
-import model.enums.TipoCategoria;
 
 public class Categoria {
     private int id;

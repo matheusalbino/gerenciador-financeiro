@@ -1,6 +1,7 @@
 package service;
 
 import dao.TransacaoDAO;
+import dao.TransacaoDAOImpl;
 import model.Filtro;
 import model.ResumoFinanceiro;
 import model.Transacao;
@@ -10,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
-    TransacaoDAO transacaoDAO;
+    TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
     private double totalEntradas;
     private double totalDespesas;
 

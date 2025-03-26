@@ -12,18 +12,25 @@ import java.util.List;
 
 public class TransacaoController {
     private final TransacaoService transacaoService = new TransacaoServiceImpl();
+    private final CategoriaController categoriaController = new CategoriaController();
 
-    public void cadastrarTransacao(int id, int userid, Categoria categoria, double valor,
+    public void cadastrarTransacao(int id, int idUsuario, int idCategoria, double valor,
                                    Date data, String descricao, TipoTransacao tipo)
     {
         // verificar campos
 
-        Transacao transacao = new Transacao(id, userid, categoria, valor, data, descricao, tipo);
+
+        // buscar categoria
+        Categoria categoria = categoriaController.buscarCategoria(idCategoria, idUsuario);
+        // criar transacao
+        Transacao transacao = new Transacao(id, idUsuario, categoria, valor, data, descricao, tipo);
+
         transacaoService.adicionarTransacao(transacao);
     }
 
     public boolean removerTransacao(int idTransacao){
         // checar id
+
 
         return transacaoService.removerTransacaoPorId(idTransacao);
     }
@@ -31,11 +38,13 @@ public class TransacaoController {
     public Transacao buscarTransacao(int idTransacao){
         // verificar not null not zero
 
+
         return transacaoService.buscarTransacaoPorID(idTransacao);
     }
 
     public List<Transacao> listarTransacoesDoUsuario(int idUsuario){
         // verificar not zero or null
+
 
         return transacaoService.buscarTransacoesPorIdUsuario(idUsuario);
     }
@@ -44,6 +53,7 @@ public class TransacaoController {
     public List<Transacao> listarTransacoesFiltradas(Filtro filtro){
         // verificar campos
         // criar filtro
+
 
         return transacaoService.buscarTransacoesPorFiltro(filtro);
     }

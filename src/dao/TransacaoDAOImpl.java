@@ -6,6 +6,7 @@ import singleton.TransacaoSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TransacaoDAOImpl implements TransacaoDAO {
 
@@ -39,8 +40,8 @@ public class TransacaoDAOImpl implements TransacaoDAO {
         for (Transacao transacao : TransacaoSingleton.getInstance().getTransacoes()){
             if ((transacao.getUserId() == filtro.getUserID())
                     && (transacao.getData().compareTo(filtro.getDataInicio()) >= 0)
-                    && (transacao.getData().compareTo(filtro.getDataFinal()) <=0)
-                    && (transacao.getCategoria().getNome() == filtro.getCategoria().getNome())
+                    && (transacao.getData().compareTo(filtro.getDataFinal()) <= 0)
+                    && (Objects.equals(transacao.getCategoria().getNome(), filtro.getCategoria().getNome()))
                     && (transacao.getTipoTransacao() == filtro.getTipoTransacao())
             )
             {

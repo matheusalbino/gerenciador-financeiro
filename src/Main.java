@@ -1,29 +1,50 @@
-import model.Categoria;
-import model.Usuario;
-import model.enums.TipoCategoria;
-import service.CategoriaService;
-import service.CategoriaServiceImpl;
-import service.UsuarioService;
-import service.UsuarioServiceImpl;
+import controller.CategoriaController;
+import controller.TransacaoController;
+import controller.UsuarioController;
+import model.Transacao;
+import model.enums.TipoTransacao;
+
+import java.util.Date;
+import java.util.List;
+
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        /*System.out.println("Hello, World!");
-        CategoriaService categoriaService = new CategoriaServiceImpl();
-        UsuarioService usuarioService = new UsuarioServiceImpl();
+    public static void main(String[] args) {
 
-        Usuario usuario = new Usuario(1, "Carlos", "AAAAA");
+        // System.out.println("Hello, World!");
 
-        Categoria categoria = new Categoria(1, 1, "Categoria1", "AAAAA", TipoCategoria.CREDITO);
+        CategoriaController categoriaController = new CategoriaController();
+        UsuarioController usuarioController = new UsuarioController();
+        TransacaoController transacaoController = new TransacaoController();
 
-        usuarioService.registrarUsuario(usuario);
+        try {
+            usuarioController.cadastrarUsuario(1, "primeiro", "senha_user");
+            categoriaController.cadastrarCategoria(1, 1, "Mercado", "Compras no mercado");
+            transacaoController.cadastrarTransacao(1, 1, 1, 333, util.CurrentDate.getCurrentDate(),
+                    "Carnes para o churrasco", TipoTransacao.DESPESA);
+        }catch(Exception e){
+            System.out.println("Falha no cadastro: " + e.getMessage());
+        }
 
-        categoriaService.adicionarCategoria(categoria);
+        System.out.println(
+                "Teste busca categoria: \nCategoria: "
+                + categoriaController.buscarCategoria(1, 1).getNome()
+                + "\nDesc: "
+                + categoriaController.buscarCategoria(1, 1).getDescricao()
+        );
 
-        System.out.println(categoriaService.buscarCategoriaPorId(1, 1).getNome());
-        */
+        System.out.println("\nTeste listar transações: ");
 
+        List<Transacao> transacoes = transacaoController.listarTransacoesDoUsuario(1);
+        for (Transacao transacao : transacoes){
+            System.out.println(
+                    transacao.getId() +
+                    " - " + transacao.getDescricao() +
+                    " - " + transacao.getValor() +
+                    " - " + transacao.getTipoTransacao().getText()
+            );
+        }
 
-
+        System.out.println();
     }
 }

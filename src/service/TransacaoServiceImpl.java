@@ -1,8 +1,6 @@
 package service;
 
-import dao.CategoriaDAO;
-import dao.TransacaoDAO;
-import dao.UsuarioDAO;
+import dao.*;
 import model.Filtro;
 import model.Transacao;
 import model.enums.TipoTransacao;
@@ -11,9 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 public class TransacaoServiceImpl implements TransacaoService{
-    private TransacaoDAO transacaoDAO;
-    private UsuarioDAO usuarioDAO;
-    private CategoriaDAO categoriaDAO;
+    private final TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
+    private final UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
+    private final CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
     private TipoTransacao tipoTransacao;
 
 
@@ -25,7 +23,7 @@ public class TransacaoServiceImpl implements TransacaoService{
         if (transacao.getCategoria() == null){
             throw new IllegalArgumentException("Escolha uma categoria válida");
         }
-        if (transacao.getData().compareTo(new Date()) <= 0){
+        if (transacao.getData().compareTo(new Date()) > 0){
             throw new IllegalArgumentException("Usuário não pode lançar transações futuras");
         }
         if (transacao.getDescricao() == null){

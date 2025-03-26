@@ -1,6 +1,5 @@
 package model;
 
-import model.enums.TipoCategoria;
 import model.enums.TipoTransacao;
 
 import java.util.Date;

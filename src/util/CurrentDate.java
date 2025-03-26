@@ -2,7 +2,7 @@ package util;
 import java.util.Date;
 
 public class CurrentDate {
-    public Date CurrentDate(){
+    public static Date getCurrentDate() {
         return new Date();
     }
 }

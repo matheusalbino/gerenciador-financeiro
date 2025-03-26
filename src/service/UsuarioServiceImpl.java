@@ -36,13 +36,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void removerUsuario(int idUsuarioARemover) {
         Usuario usuario = buscarUsuarioPorID(idUsuarioARemover);
-        // buscar as categorias e transações do usuario a ser removido
-        List<Transacao> transacoesUsuario = transacaoDAO.buscarTransacoesDeUsuario(idUsuarioARemover);
-        List<Categoria> categoriasUsuario = categoriaDAO.listarCategoriasDeUsuario(idUsuarioARemover);
-
         if (usuario == null){
             throw new IllegalArgumentException("ID de usuario não encontrado");
         }
+
+        // buscar as categorias e transações do usuario a ser removido
+        List<Transacao> transacoesUsuario = transacaoDAO.buscarTransacoesDeUsuario(idUsuarioARemover);
+        List<Categoria> categoriasUsuario = categoriaDAO.listarCategoriasDeUsuario(idUsuarioARemover);
 
         if (transacoesUsuario != null){
             // remover transações do usuário

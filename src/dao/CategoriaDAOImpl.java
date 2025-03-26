@@ -23,7 +23,6 @@ public class CategoriaDAOImpl implements CategoriaDAO {
         Categoria categoriaAEditar = buscarCategoriaPorId(categoria.getId(), categoria.getUserid());
         categoriaAEditar.setNome(categoria.getNome());
         categoriaAEditar.setDescricao(categoria.getDescricao());
-        categoriaAEditar.setTipo(categoria.getTipo());
     }
 
     @Override

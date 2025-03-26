@@ -16,19 +16,26 @@ public class CategoriaServiceImpl implements CategoriaService{
         if (categoriaDAO.buscarCategoriaPorId(categoria.getId(), categoria.getUserid()) != null){
             throw new IllegalArgumentException("Categoria ja existe pro usuário");
         }
+        // verificar se tem categoria com o mesmo nome
 
         categoriaDAO.adicionarCategoria(categoria);
     }
 
     @Override
-    public void removerCategoria(Categoria categoria) {
+    public void removerCategoria(int idCategoria, int idUsuario) {
         throw new IllegalArgumentException("Ainda não implementado");
+        // buscar categoria, checar se categoria existe naquele usuario
+        // pegar a categoria e entregar ao method da camada dao
+
     }
 
     @Override
-    public void editarCategoria(Categoria categoria) {
-        if (categoriaDAO.buscarCategoriaPorId(categoria.getId(), categoria.getUserid()) == null){
-            throw new IllegalArgumentException("Erro na edição");
+    public void editarCategoria(int idCategoria, int idUsuario) {
+        // buscar
+        Categoria categoria = buscarCategoriaPorId(idCategoria, idUsuario);
+
+        if (categoria == null){
+            throw new IllegalArgumentException("Categoria não encontrada");
         }
 
         categoriaDAO.editarCategoria(categoria);
@@ -36,11 +43,11 @@ public class CategoriaServiceImpl implements CategoriaService{
 
     @Override
     public List<Categoria> buscarCategoriasPorUserID(int idUsuario) {
-        List<Categoria> categorias = categoriaDAO.listarCategoriasDeUsuario(idUsuario);
-
         if (usuarioDAO.buscarUsuarioPorId(idUsuario) == null){
             throw new IllegalArgumentException("Usuário não encontrado");
         }
+
+        List<Categoria> categorias = categoriaDAO.listarCategoriasDeUsuario(idUsuario);
 
         if (categorias == null || categorias.size() <= 0){
             throw new IllegalArgumentException("Usuario sem categorias");
@@ -51,6 +58,9 @@ public class CategoriaServiceImpl implements CategoriaService{
 
     @Override
     public Categoria buscarCategoriaPorId(int idCategoria, int idUsuario) {
+        if (usuarioDAO.buscarUsuarioPorId(idUsuario) == null){
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
         Categoria categoria = categoriaDAO.buscarCategoriaPorId(idCategoria, idUsuario);
         if (categoria == null){
             throw new IllegalArgumentException("Categoria não encontrada");

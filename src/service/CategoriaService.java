@@ -15,15 +15,15 @@ public interface CategoriaService {
     // remover categoria
     // checar se categoria existe, checar se está ligada a transações
     // redirecionar transações a outra categoria e remover categoria
-    public void removerCategoria(Categoria categoria);
+    public void removerCategoria(int idCategoria, int idUsuario);
 
     // editar categoria
     // verificar se categoria existe e redefinir parâmetros com getters e setters
-    public void editarCategoria(Categoria categoria);
+    public void editarCategoria(int idCategoria, int idUsuario);
 
     // buscar categorias por id de usuario
     // verificar se usuario existe, checar se tem categorias, retornar categorias
-    public List<Categoria> buscarCategoriasPorUserID(int IdUsuario);
+    public List<Categoria> buscarCategoriasPorUserID(int idUsuario);
 
     // buscar categoria por id de categoria
     // verificar se categoria existe, retornar

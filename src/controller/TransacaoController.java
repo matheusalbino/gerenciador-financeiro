@@ -16,9 +16,7 @@ public class TransacaoController {
     public void cadastrarTransacao(int id, int userid, Categoria categoria, double valor,
                                    Date data, String descricao, TipoTransacao tipo)
     {
-        // checar argumentos
-
-        //----------
+        // verificar campos
 
         Transacao transacao = new Transacao(id, userid, categoria, valor, data, descricao, tipo);
         transacaoService.adicionarTransacao(transacao);
@@ -32,7 +30,6 @@ public class TransacaoController {
 
     public Transacao buscarTransacao(int idTransacao){
         // verificar not null not zero
-        //---------
 
         return transacaoService.buscarTransacaoPorID(idTransacao);
     }
@@ -43,8 +40,10 @@ public class TransacaoController {
         return transacaoService.buscarTransacoesPorIdUsuario(idUsuario);
     }
 
+    // todo filtro ainda a implementar, esse metodo irá receber dados soltos e criará o filtro necessário
     public List<Transacao> listarTransacoesFiltradas(Filtro filtro){
-        //checar filtro
+        // verificar campos
+        // criar filtro
 
         return transacaoService.buscarTransacoesPorFiltro(filtro);
     }

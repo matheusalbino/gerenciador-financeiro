@@ -3,15 +3,17 @@ package controller;
 import model.Usuario;
 import service.UsuarioService;
 import service.UsuarioServiceImpl;
-import singleton.UsuarioSingleton;
 
 public class UsuarioController {
 
-    private UsuarioService usuarioService = new UsuarioServiceImpl();
+    private final UsuarioService usuarioService = new UsuarioServiceImpl();
 
-    public void cadastrarUsuario(Usuario usuario){
-        // checar usuario
+    public void cadastrarUsuario(int id, String username, String senha){
+        // verificar campos
 
+
+        // criar objeto usuario
+        Usuario usuario = new Usuario(id, username, senha);
         usuarioService.registrarUsuario(usuario);
     }
 
@@ -34,7 +36,7 @@ public class UsuarioController {
     }
 
     public boolean validarLogin(String username, String senha){
-        // checar username e senha
+        // verificar campos
 
         return usuarioService.validarLogin(username, senha);
     }

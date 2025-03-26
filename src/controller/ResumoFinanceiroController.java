@@ -10,7 +10,7 @@ public class ResumoFinanceiroController {
     private final ResumoFinanceiroService resumoFinanceiroService = new ResumoFinanceiroServiceImpl();
 
     public ResumoFinanceiro gerarResumo(int idUsuario){
-        // checar id
+        // verificar id
 
         return resumoFinanceiroService.gerarResumo(idUsuario);
     }

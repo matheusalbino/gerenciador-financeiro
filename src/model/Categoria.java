@@ -7,14 +7,12 @@ public class Categoria {
     private int userid;
     private String nome;
     private String descricao;
-    private TipoCategoria tipo;
 
-    public Categoria(int id, int userid, String nome, String descricao, TipoCategoria tipo){
+    public Categoria(int id, int userid, String nome, String descricao){
         this.id = id;
         this.userid = userid;
         this.nome = nome;
         this.descricao = descricao;
-        this.tipo = tipo;
     }
 
 
@@ -50,11 +48,4 @@ public class Categoria {
         this.descricao = descricao;
     }
 
-    public TipoCategoria getTipo(){
-        return tipo;
-    }
-
-    public void setTipo(TipoCategoria tipo){
-        this.tipo = tipo;
-    }
 }

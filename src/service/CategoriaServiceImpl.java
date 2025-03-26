@@ -1,6 +1,7 @@
 package service;
 
 import dao.CategoriaDAO;
+import dao.CategoriaDAOImpl;
 import dao.UsuarioDAO;
 import model.Categoria;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class CategoriaServiceImpl implements CategoriaService{
     UsuarioDAO usuarioDAO;
-    CategoriaDAO categoriaDAO;
+    private final CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
 
     @Override
     public void adicionarCategoria(Categoria categoria) {
@@ -21,7 +22,7 @@ public class CategoriaServiceImpl implements CategoriaService{
 
     @Override
     public void removerCategoria(Categoria categoria) {
-        throw new RuntimeException("Ainda não implementado");
+        throw new IllegalArgumentException("Ainda não implementado");
     }
 
     @Override

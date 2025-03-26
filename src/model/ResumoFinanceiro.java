@@ -10,6 +10,24 @@ public class ResumoFinanceiro {
     private Date dataInicio;
     private Date dataFinal;
 
+    public ResumoFinanceiro(int userID, double saldoTotal, double totalCreditos, double totalDebitos){
+        this.userID = userID;
+        this.saldoTotal = saldoTotal;
+        this.totalCreditos = totalCreditos;
+        this.totalDebitos = totalDebitos;
+    }
+
+    public ResumoFinanceiro(int userID, double saldoTotal, double totalCreditos,
+                            double totalDebitos, Date dataInicio, Date dataFinal)
+    {
+        this.userID = userID;
+        this.saldoTotal = saldoTotal;
+        this.totalCreditos = totalCreditos;
+        this.totalDebitos = totalDebitos;
+        this.dataInicio = dataInicio;
+        this.dataFinal = dataFinal;
+    }
+
     public int getUserID() {
         return userID;
     }

@@ -1,38 +1,24 @@
 package dao;
 import model.Usuario;
-import java.util.List;
-import java.util.ArrayList;
+import singleton.UsuarioSingleton;
+
 
 public class UsuarioDAOImpl implements UsuarioDAO {
-    private static UsuarioDAOImpl instancia;
-    private static List<Usuario> usuarios;
-
-    private UsuarioDAOImpl() {
-        usuarios = new ArrayList<>();
-    }
-
-    public static synchronized UsuarioDAOImpl getInstance() {
-        if (instancia == null) {
-            instancia = new UsuarioDAOImpl();
-        }
-
-        return instancia;
-    }
 
     @Override
     public void cadastrarUsuario(Usuario usuario) {
-        usuarios.add(usuario);
+        UsuarioSingleton.getInstance().getUsuarios().add(usuario);
     }
 
     @Override
     public void removerUsuario(Usuario usuario) {
-        usuarios.remove(usuario);
+        UsuarioSingleton.getInstance().getUsuarios().remove(usuario);
     }
 
 
     @Override
     public Usuario buscarUsuarioPorId(int idUsuario){
-        for (Usuario usuario : usuarios){
+        for (Usuario usuario : UsuarioSingleton.getInstance().getUsuarios()){
             if (usuario.getId() == idUsuario){
                 return usuario;
             }
@@ -43,7 +29,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public Usuario buscarPorLogin(String username) {
-        for (Usuario usuario : usuarios) {
+        for (Usuario usuario : UsuarioSingleton.getInstance().getUsuarios()) {
             if (usuario.getLogin().equals(username)) {
                 return usuario;
             }
@@ -53,7 +39,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 
     public boolean validarEntrada(String username, String password) {
-        for (Usuario usuario : usuarios) {
+        for (Usuario usuario : UsuarioSingleton.getInstance().getUsuarios()) {
             if (usuario.getLogin().equals(username) && usuario.getSenha().equals(password)) {
                 return true;
             }

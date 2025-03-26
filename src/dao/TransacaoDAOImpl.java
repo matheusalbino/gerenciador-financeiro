@@ -2,38 +2,26 @@ package dao;
 
 import model.Filtro;
 import model.Transacao;
+import singleton.TransacaoSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransacaoDAOImpl implements TransacaoDAO {
-    private static TransacaoDAOImpl instancia;
-    private final List<Transacao> transacoes;
-
-    private TransacaoDAOImpl() {
-        transacoes = new ArrayList<>();
-    }
-
-    public static synchronized TransacaoDAOImpl getInstance() {
-        if (instancia == null) {
-            instancia = new TransacaoDAOImpl();
-        }
-        return instancia;
-    }
 
     @Override
     public void adicionarTransacao(Transacao transacao) {
-        transacoes.add(transacao);
+        TransacaoSingleton.getInstance().getTransacoes().add(transacao);
     }
 
     @Override
-    public void removerTransacao(Transacao transacao) { transacoes.remove(transacao); }
+    public void removerTransacao(Transacao transacao) { TransacaoSingleton.getInstance().getTransacoes().remove(transacao); }
 
     @Override
     public List<Transacao> buscarTransacoesDeUsuario(int userid) {
         List<Transacao> transacoesUsuario = new ArrayList<>();
 
-        for (Transacao transacao : transacoes) {
+        for (Transacao transacao : TransacaoSingleton.getInstance().getTransacoes()) {
             if (transacao.getUserId() == userid) {
                 transacoesUsuario.add(transacao);
             }
@@ -48,7 +36,7 @@ public class TransacaoDAOImpl implements TransacaoDAO {
     public List<Transacao> buscarTransacoesComFiltro(Filtro filtro){
         List<Transacao> transacoesFiltradas = new ArrayList<>();
 
-        for (Transacao transacao : transacoes){
+        for (Transacao transacao : TransacaoSingleton.getInstance().getTransacoes()){
             if ((transacao.getUserId() == filtro.getUserID())
                     && (transacao.getData().compareTo(filtro.getDataInicio()) >= 0)
                     && (transacao.getData().compareTo(filtro.getDataFinal()) <=0)
@@ -65,7 +53,7 @@ public class TransacaoDAOImpl implements TransacaoDAO {
 
     @Override
     public Transacao buscarTransacaoPorId(int idTransacao){
-        for (Transacao transacao : transacoes){
+        for (Transacao transacao : TransacaoSingleton.getInstance().getTransacoes()){
             if (transacao.getId() == idTransacao){
                 return transacao;
             }

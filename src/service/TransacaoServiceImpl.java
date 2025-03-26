@@ -18,7 +18,7 @@ public class TransacaoServiceImpl implements TransacaoService{
 
 
     @Override
-    public boolean adicionarTransacao(Transacao transacao){
+    public void adicionarTransacao(Transacao transacao){
         if (transacao.getValor() <= 0){
             throw new IllegalArgumentException("Valor da transação deve ser positivo");
         }
@@ -33,7 +33,6 @@ public class TransacaoServiceImpl implements TransacaoService{
         }
 
         transacaoDAO.adicionarTransacao(transacao);
-        return true;
     }
 
     @Override
@@ -47,7 +46,7 @@ public class TransacaoServiceImpl implements TransacaoService{
     }
 
     @Override
-    public List<Transacao> buscarTransacoesPorFiltro(Filtro filtro){
+    public List<Transacao> buscarTransacoesPorFiltro(Filtro filtro) {
         // testar o filtro antes de mandar a buscaDAO
         if (usuarioDAO.buscarUsuarioPorId(filtro.getUserID()) == null){
             throw new IllegalArgumentException("Codigo de usuario não encontrado");

@@ -12,7 +12,6 @@ public class Filtro {
     private Categoria categoria;
     private TipoTransacao tipoTransacao;
 
-    // construtor
     public Filtro(int userid, Date dataInicio, Date dataFinal, Categoria categoria, TipoTransacao tipoTransacao){
         this.userID = userid;
         this.dataInicio = dataInicio;

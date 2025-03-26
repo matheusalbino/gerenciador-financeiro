@@ -1,8 +1,6 @@
 package service;
 
-import dao.CategoriaDAO;
-import dao.TransacaoDAO;
-import dao.UsuarioDAO;
+import dao.*;
 import model.Categoria;
 import model.Transacao;
 import model.Usuario;
@@ -10,9 +8,9 @@ import model.Usuario;
 import java.util.List;
 
 public class UsuarioServiceImpl implements UsuarioService {
-    UsuarioDAO usuarioDAO;
-    TransacaoDAO transacaoDAO;
-    CategoriaDAO categoriaDAO;
+    UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
+    TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
+    CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
 
     @Override
     public void registrarUsuario(Usuario usuario){

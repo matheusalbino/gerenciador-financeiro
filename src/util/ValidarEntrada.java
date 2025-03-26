@@ -7,6 +7,16 @@ public final class ValidarEntrada {
 
     private ValidarEntrada() {}
 
+    public static boolean validateDouble(String numero) {
+        try {
+            Double.parseDouble(numero);
+
+            return true;
+        } catch (NumberFormatException n) {
+            return false;
+        }
+    }
+
     public static void validarNaoNuloOuVazio(Object objeto, String mensagem) {
         if (objeto == null) {
             throw new IllegalArgumentException(mensagem);

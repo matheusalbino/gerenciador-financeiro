@@ -1,48 +1,52 @@
 package util;
 
+import model.enums.TipoTransacao;
+
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 public final class ValidarEntrada {
 
     private ValidarEntrada() {}
 
-    public static boolean validateDouble(String numero) {
-        try {
-            Double.parseDouble(numero);
-
-            return true;
-        } catch (NumberFormatException n) {
-            return false;
-        }
+    public static double validateDouble(String numero) {
+        return Double.parseDouble(numero);
     }
 
-    public static void validarNaoNuloOuVazio(Object objeto, String mensagem) {
-        if (objeto == null) {
-            throw new IllegalArgumentException(mensagem);
-        }
-
-        if (objeto instanceof Integer) {
-            validarIntNuloOuMenorIgualZero((Integer) objeto, mensagem);
-
-        } else if (objeto instanceof Double) {
-            validarDoubleNuloOuMenorIgualZero((Double) objeto, mensagem);
-        }
+    public static Integer validateInteger(String numero){
+        return Integer.parseInt(numero);
     }
 
-    // Métodos de validação específicos para cada tipo
-
-    public static void validarIntNuloOuMenorIgualZero(Integer numero, String mensagem) {
-        if (numero == null || numero <= 0) {
+    public static void validarInt(Integer numero, String mensagem) {
+        if (numero < 0) {
             throw new IllegalArgumentException(mensagem);
         }
     }
 
-    public static void validarDoubleNuloOuMenorIgualZero(Double numero, String mensagem) {
-        if (numero == null || numero <= 0.0) {
+    public static void validarDouble(Double numero, String mensagem) {
+        if (numero <= 0.0) {
             throw new IllegalArgumentException(mensagem);
         }
     }
 
+    public static void validarStringNuloOuVazia(String texto, String mensagem) {
+        if (texto == null || texto.isBlank()) {
+            throw new IllegalArgumentException(mensagem);
+        }
+    }
+    public static void validarStringVazia(String texto, String mensagem) {
+        if (texto.isBlank()) {
+            throw new IllegalArgumentException(mensagem);
+        }
+    }
 
+    public static Date formatarData(String data) throws ParseException {
+        return null;
+    }
+
+    public static void validarData(Date dataInicio, String dataDeInicioInválida) {
+    }
 }

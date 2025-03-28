@@ -29,9 +29,27 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
         // instanciar filtro
         List<Transacao> transacoes = transacaoDAO.buscarTransacoesDeUsuario(userID);
         List<Transacao> transacoesFiltradas = new ArrayList<>();
+
         for (Transacao transacao : transacoes){
-            if (transacao.getData().after(dataInicio) && transacao.getData().before(dataFinal)){
-                transacoesFiltradas.add(transacao);
+            if (dataInicio != null && dataFinal != null){
+                if (transacao.getData().after(dataInicio) && transacao.getData().before(dataFinal)){
+                    transacoesFiltradas.add(transacao);
+                }
+            }
+
+            if (dataInicio == null && dataFinal != null){
+                if (transacao.getData().before(dataFinal)){
+                    transacoesFiltradas.add(transacao);
+                }
+            }
+            // corrigir isso, data do mesmo dia não está entrando no filtro
+            if (dataInicio != null && dataFinal == null){
+                if (transacao.getData().equals(dataInicio) || transacao.getData().after(dataInicio)){
+                    transacoesFiltradas.add(transacao);
+                }
+            }
+            if (dataInicio == null && dataFinal == null){
+                continue;
             }
         }
 

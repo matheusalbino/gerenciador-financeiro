@@ -6,12 +6,11 @@ import model.Transacao;
 import java.util.List;
 
 public interface TransacaoService {
-    // adicionar, remover, buscar por id, buscar com filtro
-
-    public void adicionarTransacao(Transacao transacao);
-    public boolean removerTransacaoPorId(int idTransacao);
-    public Transacao buscarTransacaoPorID(int idTransacao);
-    public List<Transacao> buscarTransacoesPorFiltro(Filtro filtro);
-    public List<Transacao> buscarTransacoesPorIdUsuario(int idUsuario);
-
+    void adicionarTransacao(Transacao transacao);
+    void removerTransacaoPorId(int idTransacao);
+    Transacao buscarTransacaoPorID(int idTransacao);
+    List<Transacao> buscarTransacoesPorFiltro(Filtro filtro);
+    List<Transacao> buscarTransacoesPorIdUsuario(int idUsuario);
+    int ultimaTransacao(int idUsuario);
+    int proximoIdTransacao(int idUsuario);
 }

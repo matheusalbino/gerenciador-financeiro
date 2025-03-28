@@ -1,72 +1,95 @@
 package service;
 
-import dao.CategoriaDAO;
-import dao.CategoriaDAOImpl;
-import dao.UsuarioDAO;
-import dao.UsuarioDAOImpl;
+import dao.*;
 import model.Categoria;
+import model.Transacao;
 
 import java.util.List;
 
-public class CategoriaServiceImpl implements CategoriaService{
+public class CategoriaServiceImpl implements CategoriaService {
     UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
     private final CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
+    private final TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
 
     @Override
     public void adicionarCategoria(Categoria categoria) {
-        if (categoriaDAO.buscarCategoriaPorId(categoria.getId(), categoria.getUserid()) != null){
+        if (categoriaDAO.buscarCategoriaPorNome(categoria.getNome(), categoria.getUserid()) != null) {
             throw new IllegalArgumentException("Categoria ja existe pro usuário");
         }
-        // verificar se tem categoria com o mesmo nome
 
         categoriaDAO.adicionarCategoria(categoria);
     }
 
     @Override
-    public void removerCategoria(int idCategoria, int idUsuario) {
-        throw new IllegalArgumentException("Ainda não implementado");
-        // buscar categoria, checar se categoria existe naquele usuario
-        // pegar a categoria e entregar ao method da camada dao
-
-    }
-
-    @Override
-    public void editarCategoria(int idCategoria, int idUsuario) {
-        // buscar
-        Categoria categoria = buscarCategoriaPorId(idCategoria, idUsuario);
-
-        if (categoria == null){
+    public void removerCategoria(String nomeCategoria, int idUsuario) {
+        Categoria categoria = categoriaDAO.buscarCategoriaPorNome(nomeCategoria, idUsuario);
+        if (categoria == null) {
             throw new IllegalArgumentException("Categoria não encontrada");
         }
 
-        categoriaDAO.editarCategoria(categoria);
+        List<Transacao> transacoesUsuario = transacaoDAO.buscarTransacoesDeUsuario(idUsuario);
+
+        for (Transacao transacao : transacoesUsuario) {
+            if (transacao.getCategoria().getNome() == categoria.getNome()) {
+                throw new IllegalArgumentException("Não é possível deletar categorias que já estão sendo usadas em alguma transação");
+            }
+        }
+
+        categoriaDAO.removerCategoria(categoria);
     }
 
+
     @Override
-    public List<Categoria> buscarCategoriasPorUserID(int idUsuario) {
-        if (usuarioDAO.buscarUsuarioPorId(idUsuario) == null){
-            throw new IllegalArgumentException("Usuário não encontrado");
+    public void editarCategoria(String nomeCategoria, int idUsuario, String nome, String descricao) {
+
+        Categoria categoria = buscarCategoriaPorNome(nomeCategoria, idUsuario);
+
+        if (categoria == null) {
+            throw new IllegalArgumentException("Categoria não encontrada");
         }
+
+        categoriaDAO.editarCategoria(categoria, nome, descricao);
+    }
+
+
+    @Override
+    public List<Categoria> listarCategoriasDeUsuario(int idUsuario) {
 
         List<Categoria> categorias = categoriaDAO.listarCategoriasDeUsuario(idUsuario);
 
-        if (categorias == null || categorias.size() <= 0){
+        if (categorias == null || categorias.isEmpty()) {
             throw new IllegalArgumentException("Usuario sem categorias");
         }
 
         return categorias;
     }
 
+
     @Override
-    public Categoria buscarCategoriaPorId(int idCategoria, int idUsuario) {
-        if (usuarioDAO.buscarUsuarioPorId(idUsuario) == null){
-            throw new IllegalArgumentException("Usuário não encontrado");
-        }
-        Categoria categoria = categoriaDAO.buscarCategoriaPorId(idCategoria, idUsuario);
-        if (categoria == null){
+    public Categoria buscarCategoriaPorNome(String nomeCategoria, int idUsuario) {
+        Categoria categoria = categoriaDAO.buscarCategoriaPorNome(nomeCategoria, idUsuario);
+
+        if (categoria == null) {
             throw new IllegalArgumentException("Categoria não encontrada");
         }
 
         return categoria;
+    }
+
+
+    @Override
+    public int ultimaCategoria(int idUsuario) {
+        List<Categoria> listaCategorias = categoriaDAO.listarCategoriasDeUsuario(idUsuario);
+
+        if (listaCategorias.isEmpty()) {
+            return 0;
+        }
+
+        return listaCategorias.getLast().getId();
+    }
+
+    @Override
+    public int proximoIdCategoria(int idUsuario) {
+        return ultimaCategoria(idUsuario) + 1;
     }
 }

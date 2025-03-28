@@ -2,6 +2,8 @@ package dao;
 import model.Usuario;
 import singleton.UsuarioSingleton;
 
+import java.util.List;
+
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
@@ -37,15 +39,21 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         return null;
     }
 
-
-    public boolean validarEntrada(String username, String password) {
-        for (Usuario usuario : UsuarioSingleton.getInstance().getUsuarios()) {
-            if (usuario.getLogin().equals(username) && usuario.getSenha().equals(password)) {
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public List<Usuario> listarUsuarios(){
+        return UsuarioSingleton.getInstance().getUsuarios();
     }
+
+    @Override
+    public void login(Usuario usuario) {
+        UsuarioSingleton.getInstance().setUsuarioLogado(usuario);
+    }
+
+    @Override
+    public Usuario getUsuarioLogado() {
+        return UsuarioSingleton.getInstance().getUsuarioLogado();
+    }
+
 }
 
 

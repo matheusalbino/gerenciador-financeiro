@@ -4,8 +4,8 @@ import model.Categoria;
 import model.Filtro;
 import model.Transacao;
 import model.enums.TipoTransacao;
-import service.TransacaoService;
-import service.TransacaoServiceImpl;
+import service.*;
+import util.ValidarEntrada;
 
 import java.util.Date;
 import java.util.List;
@@ -13,49 +13,59 @@ import java.util.List;
 public class TransacaoController {
     private final TransacaoService transacaoService = new TransacaoServiceImpl();
     private final CategoriaController categoriaController = new CategoriaController();
+    private final UsuarioService usuarioService = new UsuarioServiceImpl();
+    private final CategoriaService categoriaService = new CategoriaServiceImpl();
 
-    public void cadastrarTransacao(int id, int idUsuario, int idCategoria, double valor,
-                                   Date data, String descricao, TipoTransacao tipo)
-    {
-        // verificar campos
+    public void cadastrarTransacao(String nomeCategoria, String valorStr,
+                                   String dataStr, String descricao, String tipoTransacaoStr) {
+        try {
+            int idUsuario = this.usuarioService.getUsuarioLogado().getId();
+            int idTransacao = this.transacaoService.proximoIdTransacao(idUsuario);
+            Categoria categoria = this.categoriaService.buscarCategoriaPorNome(nomeCategoria, idUsuario);
 
+            double valorTransacao = util.ValidarEntrada.validateDouble(valorStr);
+            Date dataTransacao = util.ValidarEntrada.formatarData(dataStr);
+            TipoTransacao tipo = TipoTransacao.getTrasancao(tipoTransacaoStr);
 
-        // buscar categoria
-        Categoria categoria = categoriaController.buscarCategoria(idCategoria, idUsuario);
-        // criar transacao
-        Transacao transacao = new Transacao(id, idUsuario, categoria, valor, data, descricao, tipo);
+            Transacao transacao = new Transacao(idTransacao, idUsuario, categoria, valorTransacao, dataTransacao, descricao, tipo);
+            this.transacaoService.adicionarTransacao(transacao);
 
-        transacaoService.adicionarTransacao(transacao);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    public boolean removerTransacao(int idTransacao){
-        // checar id
-
-
-        return transacaoService.removerTransacaoPorId(idTransacao);
+    public void removerTransacao(String idTransacao) {
+        int id = ValidarEntrada.validateInteger(idTransacao);
+        this.transacaoService.removerTransacaoPorId(id);
     }
 
-    public Transacao buscarTransacao(int idTransacao){
-        // verificar not null not zero
-
-
-        return transacaoService.buscarTransacaoPorID(idTransacao);
+    public Transacao buscarTransacao(String idTransacao) {
+        int id = ValidarEntrada.validateInteger(idTransacao);
+        return this.transacaoService.buscarTransacaoPorID(id);
     }
 
-    public List<Transacao> listarTransacoesDoUsuario(int idUsuario){
-        // verificar not zero or null
-
-
-        return transacaoService.buscarTransacoesPorIdUsuario(idUsuario);
+    public List<Transacao> listarTransacoesDoUsuario() {
+        return this.transacaoService.buscarTransacoesPorIdUsuario(this.usuarioService.getUsuarioLogado().getId());
     }
 
-    // todo filtro ainda a implementar, esse metodo irá receber dados soltos e criará o filtro necessário
-    public List<Transacao> listarTransacoesFiltradas(Filtro filtro){
-        // verificar campos
-        // criar filtro
+    public List<Transacao> listarTransacoesComFiltro(String dataInicioStr, String dataFinalStr,
+                                                     String nomeCategoriaStr, String tipoTransacaoStr) {
+        try {
+            int idUsuario = usuarioService.getUsuarioLogado().getId();
+            Date dataInicio = util.ValidarEntrada.formatarData(dataInicioStr);
+            Date dataFinal = util.ValidarEntrada.formatarData(dataFinalStr);
+            Categoria categoria = categoriaService.buscarCategoriaPorNome(nomeCategoriaStr, idUsuario);
+            TipoTransacao tipo = TipoTransacao.getTrasancao(tipoTransacaoStr);
 
+            Filtro filtro = new Filtro(idUsuario, dataInicio, dataFinal, categoria, tipo);
 
-        return transacaoService.buscarTransacoesPorFiltro(filtro);
+            return transacaoService.buscarTransacoesPorFiltro(filtro);
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
 }

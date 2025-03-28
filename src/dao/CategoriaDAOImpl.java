@@ -19,10 +19,13 @@ public class CategoriaDAOImpl implements CategoriaDAO {
     }
 
     @Override
-    public void editarCategoria(Categoria categoria) {
-        Categoria categoriaAEditar = buscarCategoriaPorId(categoria.getId(), categoria.getUserid());
-        categoriaAEditar.setNome(categoria.getNome());
-        categoriaAEditar.setDescricao(categoria.getDescricao());
+    public void editarCategoria(Categoria categoria, String nome, String descricao) {
+        if (nome != null){
+            categoria.setNome(nome);
+        }
+        if (descricao != null){
+            categoria.setDescricao(descricao);
+        }
     }
 
     @Override
@@ -38,14 +41,15 @@ public class CategoriaDAOImpl implements CategoriaDAO {
     }
 
     @Override
-    public Categoria buscarCategoriaPorId(int idCategoria, int idUsuario) {
+    public Categoria buscarCategoriaPorNome(String nomeCategoria, int idUsuario) {
         List<Categoria> categoriasDoUsuario = listarCategoriasDeUsuario(idUsuario);
         for (Categoria categoria : categoriasDoUsuario) {
-            if (categoria.getId() == idCategoria) {
+            if (categoria.getNome() == nomeCategoria) {
                 return categoria;
             }
         }
 
         return null;
     }
+
 }

@@ -4,6 +4,7 @@ import dao.*;
 import model.Categoria;
 import model.Transacao;
 import model.Usuario;
+import singleton.UsuarioSingleton;
 
 import java.util.List;
 
@@ -13,20 +14,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
 
     @Override
-    public void registrarUsuario(Usuario usuario){
-        if (usuarioDAO.buscarUsuarioPorId(usuario.getId()) != null){
+    public void registrarUsuario(Usuario usuario) {
+        if (usuarioDAO.buscarUsuarioPorId(usuario.getId()) != null) {
             throw new IllegalArgumentException("Id de usuário já existente");
         }
 
         // se é um username no formato válido
         String username = usuario.getLogin().toLowerCase().strip();
-        for (char c : username.toCharArray()){
-            if (!Character.isLetterOrDigit(c) && c != '_'){
+        for (char c : username.toCharArray()) {
+            if (!Character.isLetterOrDigit(c) && c != '_') {
                 throw new IllegalArgumentException("Username inválido. Apenas (a-z, 0-9 e _)");
             }
         }
 
-        if (usuarioDAO.buscarPorLogin(usuario.getLogin()) != null){
+        if (usuarioDAO.buscarPorLogin(usuario.getLogin()) != null) {
             throw new IllegalArgumentException("Nome de usuário já existe");
         }
 
@@ -36,7 +37,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void removerUsuario(int idUsuarioARemover) {
         Usuario usuario = buscarUsuarioPorID(idUsuarioARemover);
-        if (usuario == null){
+        if (usuario == null) {
             throw new IllegalArgumentException("ID de usuario não encontrado");
         }
 
@@ -44,16 +45,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         List<Transacao> transacoesUsuario = transacaoDAO.buscarTransacoesDeUsuario(idUsuarioARemover);
         List<Categoria> categoriasUsuario = categoriaDAO.listarCategoriasDeUsuario(idUsuarioARemover);
 
-        if (transacoesUsuario != null){
+        if (transacoesUsuario != null) {
             // remover transações do usuário
-            for (Transacao transacao : transacoesUsuario){
+            for (Transacao transacao : transacoesUsuario) {
                 transacaoDAO.removerTransacao(transacao);
             }
         }
 
-        if (categoriasUsuario != null){
+        if (categoriasUsuario != null) {
             // remover categorias do usuario
-            for (Categoria categoria : categoriasUsuario){
+            for (Categoria categoria : categoriasUsuario) {
                 categoriaDAO.removerCategoria(categoria);
             }
         }
@@ -65,7 +66,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario buscarUsuarioPorLogin(String username) {
         Usuario usuario = usuarioDAO.buscarPorLogin(username);
-        if (usuario == null){
+        if (usuario == null) {
             throw new IllegalArgumentException("Username não encontrado");
         }
 
@@ -75,7 +76,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario buscarUsuarioPorID(int userID) {
         Usuario usuario = usuarioDAO.buscarUsuarioPorId(userID);
-        if (usuario == null){
+        if (usuario == null) {
             throw new IllegalArgumentException("ID de usuário não encontrado");
         }
 
@@ -83,8 +84,27 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public boolean validarLogin(String usuario, String senha) {
-        return false;
+    public Usuario validarLogin(String username, String password) {
+        for (Usuario usuario : this.listarUsuarios()) {
+            if (usuario.getLogin().equals(username) && usuario.getSenha().equals(password)) {
+                return usuario;
+            }
+        }
+        return null;
     }
 
+    @Override
+    public List<Usuario> listarUsuarios() {
+        return this.usuarioDAO.listarUsuarios();
+    }
+
+    @Override
+    public void login(Usuario usuario) {
+        this.usuarioDAO.login(usuario);
+    }
+
+    @Override
+    public Usuario getUsuarioLogado() {
+        return this.usuarioDAO.getUsuarioLogado();
+    }
 }

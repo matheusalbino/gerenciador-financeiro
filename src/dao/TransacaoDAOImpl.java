@@ -7,6 +7,7 @@ import singleton.TransacaoSingleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TransacaoDAOImpl implements TransacaoDAO {
 
@@ -32,25 +33,16 @@ public class TransacaoDAOImpl implements TransacaoDAO {
     }
 
 
-    // buscar transações com filtro
-    @Override
-    public List<Transacao> buscarTransacoesComFiltro(Filtro filtro){
-        List<Transacao> transacoesFiltradas = new ArrayList<>();
-
-        for (Transacao transacao : TransacaoSingleton.getInstance().getTransacoes()){
-            if ((transacao.getUserId() == filtro.getUserID())
-                    && (transacao.getData().compareTo(filtro.getDataInicio()) >= 0)
-                    && (transacao.getData().compareTo(filtro.getDataFinal()) <= 0)
-                    && (Objects.equals(transacao.getCategoria().getNome(), filtro.getCategoria().getNome()))
-                    && (transacao.getTipoTransacao() == filtro.getTipoTransacao())
-            )
-            {
-                transacoesFiltradas.add(transacao);
-            }
-        }
-
-        return transacoesFiltradas;
+    public List<Transacao> buscarTransacoesComFiltro(Filtro filtro) {
+        return TransacaoSingleton.getInstance().getTransacoes().stream()
+                .filter(transacao -> transacao.getUserId() == filtro.getUserID())
+                .filter(transacao -> transacao.getData().compareTo(filtro.getDataInicio()) >= 0)
+                .filter(transacao -> transacao.getData().compareTo(filtro.getDataFinal()) <= 0)
+                .filter(transacao -> transacao.getCategoria().getNome() == filtro.getCategoria().getNome())
+                .filter(transacao -> transacao.getTipoTransacao() == filtro.getTipoTransacao())
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public Transacao buscarTransacaoPorId(int idTransacao){

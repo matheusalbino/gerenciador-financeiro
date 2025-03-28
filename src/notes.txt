@@ -1,0 +1,12 @@
+    @Override
+    public Categoria buscarCategoriaPorId(int idCategoria, int idUsuario) {
+        if (usuarioDAO.buscarUsuarioPorId(idUsuario) == null){
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
+        Categoria categoria = categoriaDAO.buscarCategoriaPorId(idCategoria, idUsuario);
+        if (categoria == null){
+            throw new IllegalArgumentException("Categoria não encontrada");
+        }
+
+        return categoria;
+    }

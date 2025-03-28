@@ -5,25 +5,29 @@ import model.enums.TipoTransacao;
 import java.util.Date;
 
 public class Filtro {
-    private int userID;
-    private Date dataInicio;
-    private Date dataFinal;
+    private Integer userID;
+    private Date dataInicio = new Date();
+    private Date dataFinal = null;
     private Categoria categoria;
-    private TipoTransacao tipoTransacao;
+    private TipoTransacao tipoTransacao = null;
 
-    public Filtro(int userid, Date dataInicio, Date dataFinal, Categoria categoria, TipoTransacao tipoTransacao){
-        this.userID = userid;
+    public Filtro(Integer userID, Date dataInicio, Date dataFinal, Categoria categoria, TipoTransacao tipoTransacao) {
+        this.userID = userID;
         this.dataInicio = dataInicio;
         this.dataFinal = dataFinal;
         this.categoria = categoria;
         this.tipoTransacao = tipoTransacao;
     }
 
-    public int getUserID() {
+
+
+    // Métodos getters e setters (opcional para acesso)
+
+    public Integer getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
 
@@ -43,13 +47,6 @@ public class Filtro {
         this.dataFinal = dataFinal;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
 
     public TipoTransacao getTipoTransacao() {
         return tipoTransacao;
@@ -57,5 +54,13 @@ public class Filtro {
 
     public void setTipoTransacao(TipoTransacao tipoTransacao) {
         this.tipoTransacao = tipoTransacao;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

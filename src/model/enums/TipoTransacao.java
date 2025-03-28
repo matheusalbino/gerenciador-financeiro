@@ -5,6 +5,16 @@ public enum TipoTransacao {
     DESPESA;
 
     public String getText() {
-        return this.name(); // name() retrieves the enum's name as a string
+        return this.name();
     }
+
+    public static TipoTransacao getTrasancao(String tipo){
+        for (TipoTransacao tipoTransacao : TipoTransacao.values()){
+            if (tipoTransacao.getText() == tipo){
+                return tipoTransacao;
+            }
+        }
+        throw new IllegalArgumentException("Tipo de transação não encontrado");
+    }
+
 }

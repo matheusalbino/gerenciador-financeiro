@@ -8,7 +8,8 @@ import java.util.List;
 
 public class UsuarioSingleton {
     private static UsuarioSingleton instancia;
-    private static List<Usuario> usuarios;
+    private final List<Usuario> usuarios;
+    private Usuario usuarioLogado = null;
 
     private UsuarioSingleton() {
         usuarios = new ArrayList<>();
@@ -24,5 +25,13 @@ public class UsuarioSingleton {
 
     public List<Usuario> getUsuarios() {
         return usuarios;
+    }
+
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
     }
 }

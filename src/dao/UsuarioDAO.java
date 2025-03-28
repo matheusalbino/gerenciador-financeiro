@@ -2,9 +2,15 @@ package dao;
 
 import model.Usuario;
 
+import java.util.List;
+
 public interface UsuarioDAO {
-    public void cadastrarUsuario(Usuario usuario);
-    public void removerUsuario(Usuario usuario);
-    public Usuario buscarPorLogin(String username);
-    public Usuario buscarUsuarioPorId(int idUsuario);
+    void cadastrarUsuario(Usuario usuario);
+    void removerUsuario(Usuario usuario);
+    Usuario buscarPorLogin(String username);
+    Usuario buscarUsuarioPorId(int idUsuario);
+    //Usuario validarEntrada(String username, String password);
+    List<Usuario> listarUsuarios();
+    void login(Usuario usuario);
+    Usuario getUsuarioLogado();
 }

@@ -5,9 +5,10 @@ import model.Categoria;
 import java.util.List;
 
 public interface CategoriaDAO {
-    public void adicionarCategoria(Categoria categoria);
-    public void removerCategoria(Categoria categoria);
-    public void editarCategoria(Categoria categoria);
-    public List<Categoria> listarCategoriasDeUsuario(int id);
-    public Categoria buscarCategoriaPorId(int idCategoria, int idUsuario);
+    void adicionarCategoria(Categoria categoria);
+    void removerCategoria(Categoria categoria);
+    void editarCategoria(Categoria categoria, String nome, String descricao);
+    List<Categoria> listarCategoriasDeUsuario(int id);
+    Categoria buscarCategoriaPorNome(String nomeCategoria, int idUsuario);
+    // int ultimaCategoria(int idUsuario);
 }

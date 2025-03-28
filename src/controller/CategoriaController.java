@@ -1,46 +1,54 @@
 package controller;
 
 import model.Categoria;
+import model.Usuario;
 import service.CategoriaService;
 import service.CategoriaServiceImpl;
+import service.UsuarioService;
+import service.UsuarioServiceImpl;
 
 import java.util.List;
 
 public class CategoriaController {
     private final CategoriaService categoriaService = new CategoriaServiceImpl();
+    private final UsuarioService usuarioService = new UsuarioServiceImpl();
 
-    public void cadastrarCategoria(int idCategoria, int idUsuario, String nome, String descricao){
-        // verificar campos
+    public void cadastrarCategoria(String nome, String descricao){
+        Usuario usuarioLogado = usuarioService.getUsuarioLogado();
+        int idCategoria = categoriaService.proximoIdCategoria(usuarioLogado.getId());
 
+        util.ValidarEntrada.validarStringNuloOuVazia(nome, "Nome vazio não permitido");
 
-        Categoria categoria = new Categoria(idCategoria, idUsuario, nome, descricao);
-
+        Categoria categoria = new Categoria(idCategoria, usuarioLogado.getId(), nome, descricao);
         categoriaService.adicionarCategoria(categoria);
     }
 
-    public void removerCategoria(int idCategoria, int idUsuario){
-        // verificar ids
+    public void removerCategoria(String nomeCategoria){
+        int idUsuario = usuarioService.getUsuarioLogado().getId();
 
+        util.ValidarEntrada.validarStringVazia(nomeCategoria, "Nome de categoria inválido");
 
-        categoriaService.removerCategoria(idCategoria, idUsuario);
+        categoriaService.removerCategoria(nomeCategoria, idUsuario);
     }
 
-    public void editarCategoria(int idCategoria, int idUsuario){
-        // verificar id
+    public void editarCategoria(String nomeCategoria, String nome, String descricao){
 
-        categoriaService.editarCategoria(idCategoria, idUsuario);
+        util.ValidarEntrada.validarStringNuloOuVazia(nome, "Nome não pode ser vazio");
+        util.ValidarEntrada.validarStringNuloOuVazia(nomeCategoria, "Nome de categoria inválido");
+        int idUsuario = usuarioService.getUsuarioLogado().getId();
+
+        categoriaService.editarCategoria(nomeCategoria, idUsuario, nome, descricao);
     }
 
-    public List<Categoria> listarCategoriasDoUsuario(int idUsuario){
-        // verificar id
-
-        return categoriaService.buscarCategoriasPorUserID(idUsuario);
+    public List<Categoria> listarCategoriasDoUsuario(){
+        int idUsuario = usuarioService.getUsuarioLogado().getId();
+        return categoriaService.listarCategoriasDeUsuario(idUsuario);
     }
 
-    public Categoria buscarCategoria(int idCategoria, int idUsuario){
-        // verificar ids
-
-        return categoriaService.buscarCategoriaPorId(idCategoria, idUsuario);
+    public Categoria buscarCategoria (String nomeCategoria){
+        int idUsuario = usuarioService.getUsuarioLogado().getId();
+        util.ValidarEntrada.validarStringNuloOuVazia(nomeCategoria, "Nome categoria inválido");
+        return categoriaService.buscarCategoriaPorNome(nomeCategoria, idUsuario);
     }
 
 }

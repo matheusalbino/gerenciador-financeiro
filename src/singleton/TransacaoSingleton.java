@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransacaoSingleton {
-    private static TransacaoSingleton instancia;
+    private static TransacaoSingleton instancia = new TransacaoSingleton();
     private final List<Transacao> transacoes;
 
     private TransacaoSingleton() {

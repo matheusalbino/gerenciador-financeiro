@@ -2,21 +2,22 @@ package model;
 
 import model.enums.TipoTransacao;
 
+import java.text.ParseException;
 import java.util.Date;
 
 public class Filtro {
     private Integer userID;
-    private Date dataInicio = new Date();
-    private Date dataFinal = null;
+    private Date dataInicio;// = util.ValidarEntrada.formatarData("01/01/1888");
+    private Date dataFinal = new Date();
     private Categoria categoria;
     private TipoTransacao tipoTransacao = null;
 
     public Filtro(Integer userID, Date dataInicio, Date dataFinal, Categoria categoria, TipoTransacao tipoTransacao) {
-        this.userID = userID;
-        this.dataInicio = dataInicio;
-        this.dataFinal = dataFinal;
-        this.categoria = categoria;
-        this.tipoTransacao = tipoTransacao;
+        this.userID = userID; // Valor padrão para userID
+        this.dataInicio = dataInicio != null ? dataInicio : new Date(0); // Valor padrão: 01/01/1970
+        this.dataFinal = dataFinal != null ? dataFinal : new Date(); // Valor padrão: data atual
+        this.categoria = categoria != null ? categoria : new Categoria(); // Assumindo um construtor vazio na classe Categoria
+        this.tipoTransacao = tipoTransacao != null ? tipoTransacao : TipoTransacao.DESPESA; // Valor padrão, exemplo
     }
 
 

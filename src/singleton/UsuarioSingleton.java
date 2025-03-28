@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioSingleton {
-    private static UsuarioSingleton instancia;
+    private static UsuarioSingleton instancia = new UsuarioSingleton();
     private final List<Usuario> usuarios;
     private Usuario usuarioLogado = null;
 
@@ -24,11 +24,11 @@ public class UsuarioSingleton {
     }
 
     public List<Usuario> getUsuarios() {
-        return usuarios;
+        return instancia.usuarios;
     }
 
     public Usuario getUsuarioLogado() {
-        return usuarioLogado;
+        return instancia.usuarioLogado;
     }
 
     public void setUsuarioLogado(Usuario usuarioLogado) {

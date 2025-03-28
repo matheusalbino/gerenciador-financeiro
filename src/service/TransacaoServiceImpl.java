@@ -50,7 +50,7 @@ public class TransacaoServiceImpl implements TransacaoService {
         List<Transacao> transacoesUsuario = transacaoDAO.buscarTransacoesDeUsuario(idUsuario);
 
         if (transacoesUsuario.isEmpty()) {
-            throw new IllegalArgumentException("Sem transações de usuario");
+            return null;
         }
 
         return transacoesUsuario;
@@ -71,7 +71,7 @@ public class TransacaoServiceImpl implements TransacaoService {
     public int ultimaTransacao(int idUsuario) {
         List<Transacao> listaTransacao = buscarTransacoesPorIdUsuario(idUsuario);
 
-        if (listaTransacao.isEmpty()) {
+        if (listaTransacao == null || listaTransacao.isEmpty()) {
             return 0;
         }
 

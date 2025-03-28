@@ -25,7 +25,7 @@ public class TransacaoController {
 
             double valorTransacao = util.ValidarEntrada.validateDouble(valorStr);
             Date dataTransacao = util.ValidarEntrada.formatarData(dataStr);
-            TipoTransacao tipo = TipoTransacao.getTrasancao(tipoTransacaoStr);
+            TipoTransacao tipo = TipoTransacao.getTrasancao(tipoTransacaoStr.toUpperCase());
 
             Transacao transacao = new Transacao(idTransacao, idUsuario, categoria, valorTransacao, dataTransacao, descricao, tipo);
             this.transacaoService.adicionarTransacao(transacao);
@@ -53,9 +53,13 @@ public class TransacaoController {
     public List<Transacao> listarTransacoesComFiltro(String dataInicioStr, String dataFinalStr,
                                                      String nomeCategoriaStr, String tipoTransacaoStr) {
         try {
+            // todo esse método aqui está dando erro pois os métodos de verificação nao aceitam null
+
             int idUsuario = usuarioService.getUsuarioLogado().getId();
+
             Date dataInicio = util.ValidarEntrada.formatarData(dataInicioStr);
             Date dataFinal = util.ValidarEntrada.formatarData(dataFinalStr);
+
             Categoria categoria = categoriaService.buscarCategoriaPorNome(nomeCategoriaStr, idUsuario);
             TipoTransacao tipo = TipoTransacao.getTrasancao(tipoTransacaoStr);
 

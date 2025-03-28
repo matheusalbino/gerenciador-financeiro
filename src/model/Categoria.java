@@ -7,6 +7,8 @@ public class Categoria {
     private String nome;
     private String descricao;
 
+    public Categoria(){}
+
     public Categoria(int id, int userid, String nome, String descricao){
         this.id = id;
         this.userid = userid;

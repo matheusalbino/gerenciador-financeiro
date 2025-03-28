@@ -22,7 +22,7 @@ public class TransacaoDAOImpl implements TransacaoDAO {
     @Override
     public List<Transacao> buscarTransacoesDeUsuario(int userid) {
         List<Transacao> transacoesUsuario = new ArrayList<>();
-
+        // todo
         for (Transacao transacao : TransacaoSingleton.getInstance().getTransacoes()) {
             if (transacao.getUserId() == userid) {
                 transacoesUsuario.add(transacao);

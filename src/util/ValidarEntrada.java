@@ -44,9 +44,9 @@ public final class ValidarEntrada {
     }
 
     public static Date formatarData(String data) throws ParseException {
-        return null;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.parse(data);
     }
 
-    public static void validarData(Date dataInicio, String dataDeInicioInválida) {
-    }
+
 }

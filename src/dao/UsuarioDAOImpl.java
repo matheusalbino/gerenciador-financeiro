@@ -17,7 +17,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         UsuarioSingleton.getInstance().getUsuarios().remove(usuario);
     }
 
-
     @Override
     public Usuario buscarUsuarioPorId(int idUsuario){
         for (Usuario usuario : UsuarioSingleton.getInstance().getUsuarios()){
@@ -28,10 +27,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         return null;
     }
 
-
     @Override
-    public Usuario buscarPorLogin(String username) {
+    public Usuario buscarPorNome(String username) {
         for (Usuario usuario : UsuarioSingleton.getInstance().getUsuarios()) {
+            System.out.println(usuario.getLogin());
             if (usuario.getLogin().equals(username)) {
                 return usuario;
             }
@@ -45,7 +44,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public void login(Usuario usuario) {
+    public void logarUsuario(Usuario usuario) {
         UsuarioSingleton.getInstance().setUsuarioLogado(usuario);
     }
 

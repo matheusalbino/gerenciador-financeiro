@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaSingleton {
-    private static CategoriaSingleton instancia;
+    private static CategoriaSingleton instancia = new CategoriaSingleton();
     private final List<Categoria> categorias;
 
     private CategoriaSingleton() {

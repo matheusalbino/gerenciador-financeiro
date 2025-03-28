@@ -15,6 +15,7 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
     private double totalEntradas;
     private double totalDespesas;
 
+    @Override
     public ResumoFinanceiro gerarResumo(int userID) {
         List<Transacao> transacoes = transacaoDAO.buscarTransacoesDeUsuario(userID);
         double totalEntradas = totalEntradas(transacoes);
@@ -26,30 +27,20 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
 
     @Override
     public ResumoFinanceiro gerarResumo(int userID, Date dataInicio, Date dataFinal) {
-        // instanciar filtro
         List<Transacao> transacoes = transacaoDAO.buscarTransacoesDeUsuario(userID);
         List<Transacao> transacoesFiltradas = new ArrayList<>();
+        if (transacoes.isEmpty()){
+            return new ResumoFinanceiro(userID, 0, 0, 0);
+        }
 
-        for (Transacao transacao : transacoes){
-            if (dataInicio != null && dataFinal != null){
-                if (transacao.getData().after(dataInicio) && transacao.getData().before(dataFinal)){
-                    transacoesFiltradas.add(transacao);
-                }
-            }
+        for (Transacao transacao : transacoes) {
+            Date dataTransacao = transacao.getData();
 
-            if (dataInicio == null && dataFinal != null){
-                if (transacao.getData().before(dataFinal)){
-                    transacoesFiltradas.add(transacao);
-                }
-            }
-            // corrigir isso, data do mesmo dia não está entrando no filtro
-            if (dataInicio != null && dataFinal == null){
-                if (transacao.getData().equals(dataInicio) || transacao.getData().after(dataInicio)){
-                    transacoesFiltradas.add(transacao);
-                }
-            }
-            if (dataInicio == null && dataFinal == null){
-                continue;
+            boolean dentroDoIntervalo = (dataInicio == null || !dataTransacao.before(dataInicio)) &&
+                    (dataFinal == null || !dataTransacao.after(dataFinal));
+
+            if (dentroDoIntervalo) {
+                transacoesFiltradas.add(transacao);
             }
         }
 
@@ -60,32 +51,25 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
         return new ResumoFinanceiro(userID, saldoAtual, totalEntradas, totalDespesas);
     }
 
-
     @Override
     public double totalEntradas(List<Transacao> transacoes) {
-        if (transacoes.size() <= 0) {
-            // sem entradas
-            return totalEntradas = 0;
-        }
         for (Transacao transacao : transacoes) {
             if (transacao.getTipoTransacao().getText() == "RECEITA") {
                 totalEntradas += transacao.getValor();
             }
         }
+
         return totalEntradas;
     }
 
     @Override
     public double totalDespesas(List<Transacao> transacoes) {
-        if (transacoes.size() <= 0) {
-            // sem despesas
-            return totalDespesas = 0;
-        }
         for (Transacao transacao : transacoes) {
             if (transacao.getTipoTransacao().getText() == "DESPESA") {
                 totalDespesas += transacao.getValor();
             }
         }
+
         return totalDespesas;
     }
 

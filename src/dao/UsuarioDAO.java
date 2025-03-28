@@ -7,10 +7,9 @@ import java.util.List;
 public interface UsuarioDAO {
     void cadastrarUsuario(Usuario usuario);
     void removerUsuario(Usuario usuario);
-    Usuario buscarPorLogin(String username);
+    Usuario buscarPorNome(String username);
     Usuario buscarUsuarioPorId(int idUsuario);
-    //Usuario validarEntrada(String username, String password);
     List<Usuario> listarUsuarios();
-    void login(Usuario usuario);
+    void logarUsuario(Usuario usuario);
     Usuario getUsuarioLogado();
 }

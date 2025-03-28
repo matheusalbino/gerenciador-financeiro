@@ -31,13 +31,13 @@ public class CategoriaController {
         categoriaService.removerCategoria(nomeCategoria, idUsuario);
     }
 
-    public void editarCategoria(String nomeCategoria, String nome, String descricao){
+    public void editarCategoria(String nomeCategoria, String novoNome, String novaDescricao){
 
-        util.ValidarEntrada.validarStringNuloOuVazia(nome, "Nome não pode ser vazio");
+        util.ValidarEntrada.validarStringNuloOuVazia(novoNome, "Nome não pode ser vazio");
         util.ValidarEntrada.validarStringNuloOuVazia(nomeCategoria, "Nome de categoria inválido");
         int idUsuario = usuarioService.getUsuarioLogado().getId();
 
-        categoriaService.editarCategoria(nomeCategoria, idUsuario, nome, descricao);
+        categoriaService.editarCategoria(nomeCategoria, idUsuario, novoNome, novaDescricao);
     }
 
     public List<Categoria> listarCategoriasDoUsuario(){

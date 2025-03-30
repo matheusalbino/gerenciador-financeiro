@@ -31,8 +31,8 @@ public class sistemaFinanceiroUI extends JFrame implements ActionListener {
     public sistemaFinanceiroUI() {
 
         setTitle("Sistema Financeiro");
-        setSize(600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 500);
         setLayout(new BorderLayout());
         add(headerPainel, BorderLayout.NORTH);
         painelEsquerdo.setBorder(BorderFactory.createEmptyBorder(60, 40, 20, 120));

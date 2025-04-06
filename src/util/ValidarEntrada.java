@@ -44,8 +44,13 @@ public final class ValidarEntrada {
     }
 
     public static Date formatarData(String data) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.parse(data);
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            return formatter.parse(data);
+        }catch (Exception e){
+            System.out.println("Data nao permitida");
+        }
+        return null;
     }
 
 

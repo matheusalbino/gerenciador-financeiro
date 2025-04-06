@@ -53,6 +53,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         return UsuarioSingleton.getInstance().getUsuarioLogado();
     }
 
+    @Override
+    public void logoutUsuario(){
+        UsuarioSingleton.getInstance().setUsuarioLogado(null);
+    }
+
 }
 
 

@@ -14,13 +14,17 @@ public class CategoriaController {
     private final UsuarioService usuarioService = new UsuarioServiceImpl();
 
     public void cadastrarCategoria(String nome, String descricao){
-        Usuario usuarioLogado = usuarioService.getUsuarioLogado();
-        int idCategoria = categoriaService.proximoIdCategoria(usuarioLogado.getId());
+        try {
+            Usuario usuarioLogado = usuarioService.getUsuarioLogado();
+            int idCategoria = categoriaService.proximoIdCategoria(usuarioLogado.getId());
 
-        util.ValidarEntrada.validarStringNuloOuVazia(nome, "Nome vazio não permitido");
+            util.ValidarEntrada.validarStringNuloOuVazia(nome, "Nome vazio não permitido");
 
-        Categoria categoria = new Categoria(idCategoria, usuarioLogado.getId(), nome, descricao);
-        categoriaService.adicionarCategoria(categoria);
+            Categoria categoria = new Categoria(idCategoria, usuarioLogado.getId(), nome, descricao);
+            categoriaService.adicionarCategoria(categoria);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void removerCategoria(String nomeCategoria){

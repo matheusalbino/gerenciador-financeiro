@@ -66,11 +66,11 @@ public class Transacao {
         this.descricao = descricao;
     }
 
-    public TipoTransacao getTipoTransacao() {
+    public TipoTransacao getTipo() {
         return tipo;
     }
 
-    public void setTipoTransacao(TipoTransacao tipo) {
+    public void setTipo(TipoTransacao tipo) {
         this.tipo = tipo;
     }
 }

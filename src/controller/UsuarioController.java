@@ -32,6 +32,14 @@ public class UsuarioController {
         return usuarioService.buscarUsuarioPorID(idUsuario);
     }
 
+    public void logoutUsuario(){
+        usuarioService.logOutUsuario();
+    }
+
+    public Usuario buscarUsuarioLogado(){
+        return usuarioService.getUsuarioLogado();
+    }
+
     public Usuario buscarUsuarioPorUsername(String username){
         util.ValidarEntrada.validarStringNuloOuVazia(username, "Insira um username");
         return usuarioService.buscarUsuarioPorNome(username);

@@ -6,12 +6,7 @@ import controller.TransacaoController;
 import controller.UsuarioController;
 import model.ResumoFinanceiro;
 import model.Transacao;
-import model.Usuario;
-import model.enums.TipoTransacao;
-import service.UsuarioService;
-import service.UsuarioServiceImpl;
 
-import java.util.Date;
 import java.util.List;
 
 public class test {
@@ -53,11 +48,10 @@ public class test {
                     transacao.getId() +
                             " - " + transacao.getDescricao() +
                             " - " + transacao.getValor() +
-                            " - " + transacao.getTipoTransacao().getText()
+                            " - " + transacao.getTipo().getText()
             );
         }
 
-        // todo testar features:
 
         // todo buscando transações com filtro
         /*
@@ -79,9 +73,11 @@ public class test {
         System.out.println(resumoFinanceiro.getTotalCreditos() + " " + resumoFinanceiro.getTotalDebitos() + " " + resumoFinanceiro.getSaldoTotal());
 
 
-        // teste gerar resumo com filtro por período
+        // todo teste gerar resumo com filtro por período
+
         //System.out.println("\nGerando resumo financeiro por período:");
-        // todo data do mesmo dia não está entrando no filtro
+
+        // data do mesmo dia não está entrando no filtro
         //ResumoFinanceiro resumoFiltrado = resumoFinanceiroController.gerarResumoFiltrado(null, null);
         //System.out.println(resumoFiltrado.getTotalCreditos() + " " + resumoFiltrado.getTotalDebitos() + " " + resumoFiltrado.getSaldoTotal());
 

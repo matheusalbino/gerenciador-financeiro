@@ -2,7 +2,6 @@ package service;
 
 import dao.TransacaoDAO;
 import dao.TransacaoDAOImpl;
-import model.Filtro;
 import model.ResumoFinanceiro;
 import model.Transacao;
 
@@ -12,8 +11,6 @@ import java.util.List;
 
 public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
     TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
-    private double totalEntradas;
-    private double totalDespesas;
 
     @Override
     public ResumoFinanceiro gerarResumo(int userID) {
@@ -53,8 +50,9 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
 
     @Override
     public double totalEntradas(List<Transacao> transacoes) {
+        double totalEntradas = 0;
         for (Transacao transacao : transacoes) {
-            if (transacao.getTipoTransacao().getText() == "RECEITA") {
+            if (transacao.getTipo().getText() == "RECEITA") {
                 totalEntradas += transacao.getValor();
             }
         }
@@ -64,8 +62,9 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
 
     @Override
     public double totalDespesas(List<Transacao> transacoes) {
+        double totalDespesas = 0;
         for (Transacao transacao : transacoes) {
-            if (transacao.getTipoTransacao().getText() == "DESPESA") {
+            if (transacao.getTipo().getText() == "DESPESA") {
                 totalDespesas += transacao.getValor();
             }
         }

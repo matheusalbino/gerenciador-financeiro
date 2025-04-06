@@ -1,5 +1,7 @@
 package model.enums;
 
+import java.util.Arrays;
+
 public enum TipoTransacao {
     RECEITA,
     DESPESA;
@@ -9,8 +11,9 @@ public enum TipoTransacao {
     }
 
     public static TipoTransacao getTrasancao(String tipo){
-        for (TipoTransacao tipoTransacao : TipoTransacao.values()){
-            if (tipoTransacao.getText() == tipo){
+        for (TipoTransacao tipoTransacao : Arrays.stream(TipoTransacao.values()).toList()){
+            System.out.println(tipoTransacao.getText().toUpperCase() + " - " + tipo.toUpperCase());
+            if (tipoTransacao.getText().equalsIgnoreCase(tipo)){
                 return tipoTransacao;
             }
         }

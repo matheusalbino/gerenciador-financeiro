@@ -5,6 +5,7 @@ import model.Categoria;
 import model.Transacao;
 import model.Usuario;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.List;
 
 public class UsuarioServiceImpl implements UsuarioService {
@@ -96,13 +97,26 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public void logOutUsuario(){
+        if (this.getUsuarioLogado() == null){
+            throw new IllegalArgumentException("Usuario não encontrado");
+        }
+        usuarioDAO.logoutUsuario();
+        System.out.println("Logout de usuario");
+    }
+
+    @Override
     public List<Usuario> listarUsuarios() {
         return this.usuarioDAO.listarUsuarios();
     }
 
     @Override
     public Usuario getUsuarioLogado() {
-        return this.usuarioDAO.getUsuarioLogado();
+        Usuario usuario = this.usuarioDAO.getUsuarioLogado();
+        if (usuario == null){
+            throw new IllegalArgumentException("Nenhum usuario logado");
+        }
+        return usuario;
     }
 
     @Override

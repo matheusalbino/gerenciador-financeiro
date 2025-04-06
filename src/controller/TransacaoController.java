@@ -72,4 +72,6 @@ public class TransacaoController {
         }
     }
 
+    public void editarTransacao(String nomeCategoria, String valorStr,
+                                   String dataStr, String descricao, String tipoTransacaoStr){}
 }

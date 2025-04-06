@@ -12,6 +12,7 @@ public interface UsuarioService {
     Usuario validarLogin(String usuario, String senha);
     List<Usuario> listarUsuarios();
     Usuario getUsuarioLogado();
+    void logOutUsuario();
     int ultimoIdUsuario();
     int proximoIdUsuario();
 }

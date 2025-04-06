@@ -12,4 +12,5 @@ public interface UsuarioDAO {
     List<Usuario> listarUsuarios();
     void logarUsuario(Usuario usuario);
     Usuario getUsuarioLogado();
+    void logoutUsuario();
 }

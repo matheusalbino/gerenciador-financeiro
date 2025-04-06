@@ -3,10 +3,8 @@ package org.example.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.*;
-import javax.swing.event.*;
 
-public class sistemaFinanceiroUI extends JFrame implements ActionListener {
+public class sistemaFinanceiroUIv1 extends JFrame implements ActionListener {
 
     JLabel jLabel1 = new JLabel("Sistema Financeiro:");
     JLabel jLabel2 = new JLabel("Sistema destinado para registros financeiros.");
@@ -30,7 +28,7 @@ public class sistemaFinanceiroUI extends JFrame implements ActionListener {
 
 
 
-    public sistemaFinanceiroUI() {
+    public sistemaFinanceiroUIv1() {
 
         setTitle("Sistema Financeiro");
         setSize(600, 500);
@@ -86,7 +84,7 @@ public class sistemaFinanceiroUI extends JFrame implements ActionListener {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new sistemaFinanceiroUI().setVisible(true);
+                new sistemaFinanceiroUIv1().setVisible(true);
             }
         });
 

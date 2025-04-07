@@ -33,15 +33,25 @@ public class TelaTransacao extends JPanel {
     public TelaTransacao() {
         this.setLayout(new BorderLayout(10, 10));
 
-        JPanel painelFormulario = new JPanel();
+        JPanel painelFormulario = new JPanel(new GridBagLayout());
         painelFormulario.setBorder(new LineBorder(Color.GRAY));
-        painelFormulario.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        setCampos(painelFormulario,gbc);
-        setBotoes(painelFormulario,gbc);
+        setCampos(painelFormulario, gbc);
+        setBotoes(painelFormulario, gbc);
+
+        btnDeletar = new JButton("Deletar Transação");
+        btnDeletar.setPreferredSize(new Dimension(180, 40));
+        btnDeletar.setEnabled(false);
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        painelFormulario.add(btnDeletar, gbc);
+
+        this.add(painelFormulario, BorderLayout.NORTH);
 
         btnCadastrar.addActionListener(e -> {
             try {
@@ -55,7 +65,7 @@ public class TelaTransacao extends JPanel {
                 limparFormulario();
                 atualizarTabela();
                 System.out.println("Transação cadastrada.");
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         });
@@ -76,10 +86,8 @@ public class TelaTransacao extends JPanel {
         JScrollPane scrollTabela = new JScrollPane(tabelaTransacoes);
         scrollTabela.setBorder(new LineBorder(Color.GRAY));
 
-        JPanel painelAcoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        btnDeletar = new JButton("Deletar");
-        btnDeletar.setEnabled(false);
-        painelAcoes.add(btnDeletar);
+        JPanel painelCentro = new JPanel(new BorderLayout(10, 10));
+        painelCentro.add(scrollTabela, BorderLayout.CENTER);
 
         tabelaTransacoes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -102,11 +110,6 @@ public class TelaTransacao extends JPanel {
             }
         });
 
-        JPanel painelCentro = new JPanel(new BorderLayout(10, 10));
-        painelCentro.add(scrollTabela, BorderLayout.CENTER);
-        painelCentro.add(painelAcoes, BorderLayout.SOUTH);
-
-        this.add(painelFormulario, BorderLayout.NORTH);
         this.add(painelCentro, BorderLayout.CENTER);
 
         this.addComponentListener(new ComponentAdapter() {
@@ -176,6 +179,7 @@ public class TelaTransacao extends JPanel {
 
     private void setBotoes(JPanel painelFormulario, GridBagConstraints gbc) {
         btnCadastrar = new JButton("Cadastrar Transação");
+        btnCadastrar.setPreferredSize(new Dimension(180, 40));
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2;

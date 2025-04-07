@@ -36,8 +36,24 @@ public class TelaCategoria extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        setTxtFields(painelFormulario,gbc);
-        setBotoes(painelFormulario,gbc);
+        setTxtFields(painelFormulario, gbc);
+        setBotoes(painelFormulario, gbc);
+
+        btnEditar = new JButton("Editar");
+        btnDeletar = new JButton("Deletar");
+        btnEditar.setEnabled(false);
+        btnDeletar.setEnabled(false);
+
+        JPanel painelEdicao = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        painelEdicao.add(btnEditar);
+        painelEdicao.add(btnDeletar);
+
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.BOTH;
+        painelFormulario.add(painelEdicao, gbc);
 
         try {
             btnCadastrar.addActionListener(e -> {
@@ -48,7 +64,7 @@ public class TelaCategoria extends JPanel {
                 limparFormulario();
                 atualizarTabela();
             });
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
 
@@ -65,7 +81,7 @@ public class TelaCategoria extends JPanel {
                 btnCadastrar.setEnabled(true);
                 categoriaSelecionadaNome = null;
                 System.out.println("Categoria editada.");
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         });
@@ -81,14 +97,6 @@ public class TelaCategoria extends JPanel {
         tabelaCategorias = new JTable(modeloTabela);
         JScrollPane scrollTabela = new JScrollPane(tabelaCategorias);
         scrollTabela.setBorder(new LineBorder(Color.GRAY));
-
-        JPanel painelAcoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        btnEditar = new JButton("Editar");
-        btnDeletar = new JButton("Deletar");
-        btnEditar.setEnabled(false);
-        btnDeletar.setEnabled(false);
-        painelAcoes.add(btnEditar);
-        painelAcoes.add(btnDeletar);
 
         tabelaCategorias.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -130,14 +138,12 @@ public class TelaCategoria extends JPanel {
 
         JPanel painelCentro = new JPanel(new BorderLayout(10, 10));
         painelCentro.add(scrollTabela, BorderLayout.CENTER);
-        painelCentro.add(painelAcoes, BorderLayout.SOUTH);
 
         this.add(painelFormulario, BorderLayout.NORTH);
         this.add(painelCentro, BorderLayout.CENTER);
 
         atualizarTabela();
     }
-
 
     private void setTxtFields(JPanel painelFormulario, GridBagConstraints gbc) {
         JLabel lblNome = new JLabel("Nome:");
@@ -176,7 +182,6 @@ public class TelaCategoria extends JPanel {
         painelFormulario.add(btnAtualizar, gbc);
     }
 
-
     private void limparFormulario() {
         txtNome.setText("");
         txtDescricao.setText("");
@@ -184,9 +189,9 @@ public class TelaCategoria extends JPanel {
 
     private void atualizarTabela() {
         modeloTabela.setRowCount(0);
-        try{
+        try {
             List<Categoria> categorias = categoriaController.listarCategoriasDoUsuario();
-            if (categorias != null){
+            if (categorias != null) {
                 for (Categoria c : categorias) {
                     modeloTabela.addRow(new Object[]{
                             c.getNome(),
@@ -194,9 +199,8 @@ public class TelaCategoria extends JPanel {
                     });
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 }

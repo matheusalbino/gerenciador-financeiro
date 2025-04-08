@@ -29,20 +29,16 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
         if (transacoes.isEmpty()){
             return new ResumoFinanceiro(userID, 0, 0, 0);
         }
-
-        for (Transacao transacao : transacoes) {
-            Date dataTransacao = transacao.getData();
-
-            boolean dentroDoIntervalo = (dataInicio == null || !dataTransacao.before(dataInicio)) &&
-                    (dataFinal == null || !dataTransacao.after(dataFinal));
-
-            if (dentroDoIntervalo) {
-                transacoesFiltradas.add(transacao);
-            }
+        if (dataInicio != null) {
+            transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(dataInicio) >= 0).toList();
+        }
+        if (dataFinal != null) {
+            transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(dataFinal) <= 0).toList();
         }
 
-        double totalEntradas = totalEntradas(transacoesFiltradas);
-        double totalDespesas = totalDespesas(transacoesFiltradas);
+
+        double totalEntradas = totalEntradas(transacoes);
+        double totalDespesas = totalDespesas(transacoes);
         double saldoAtual = saldoAtual(totalEntradas, totalDespesas);
 
         return new ResumoFinanceiro(userID, saldoAtual, totalEntradas, totalDespesas);

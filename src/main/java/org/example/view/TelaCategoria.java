@@ -82,7 +82,7 @@ public class TelaCategoria extends JPanel {
                 categoriaSelecionadaNome = null;
                 System.out.println("Categoria editada.");
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 

@@ -11,10 +11,10 @@ public class CategoriaServiceImpl implements CategoriaService {
     private final CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
     private final TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
 
-    // todo esta permitindo adicionar categorias com o mesmo nome
+
     @Override
     public void adicionarCategoria(Categoria categoria) {
-        if (categoriaDAO.buscarCategoriaPorNome(categoria.getNome(), categoria.getUserid()) != null) {
+        if (categoriaDAO.buscarCategoriaPorNome(categoria.getNome(), categoria.getUserid()) != null ){
             throw new IllegalArgumentException("Categoria ja existe pro usuário");
         }
 
@@ -24,6 +24,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public void removerCategoria(String nomeCategoria, int idUsuario) {
         Categoria categoria = categoriaDAO.buscarCategoriaPorNome(nomeCategoria, idUsuario);
+
         if (categoria == null) {
             throw new IllegalArgumentException("Categoria não encontrada");
         }
@@ -42,7 +43,6 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public void editarCategoria(String nomeCategoria, int idUsuario, String nome, String descricao) {
-
         Categoria categoria = buscarCategoriaPorNome(nomeCategoria, idUsuario);
 
         if (categoria == null) {
@@ -68,13 +68,11 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public Categoria buscarCategoriaPorNome(String nomeCategoria, int idUsuario) {
-        Categoria categoria = categoriaDAO.buscarCategoriaPorNome(nomeCategoria, idUsuario);
 
-        if (categoria == null) {
-            throw new IllegalArgumentException("Categoria não encontrada");
+        if (nomeCategoria != null) {
+            return categoriaDAO.buscarCategoriaPorNome(nomeCategoria, idUsuario);
         }
-
-        return categoria;
+        return null;
     }
 
 

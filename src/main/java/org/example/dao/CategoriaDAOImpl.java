@@ -2,6 +2,7 @@ package org.example.dao;
 
 import org.example.model.Categoria;
 import org.example.singleton.CategoriaSingleton;
+import org.example.singleton.UsuarioSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,9 @@ public class CategoriaDAOImpl implements CategoriaDAO {
     @Override
     public void editarCategoria(Categoria categoria, String nome, String descricao) {
         if (nome != null){
+            if (buscarCategoriaPorNome(nome, categoria.getUserid()) != null){
+                throw new IllegalArgumentException("Categoria ja existe pro usuário");
+            }
             categoria.setNome(nome);
         }
         if (descricao != null){
@@ -42,9 +46,11 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 
     @Override
     public Categoria buscarCategoriaPorNome(String nomeCategoria, int idUsuario) {
+
         List<Categoria> categoriasDoUsuario = listarCategoriasDeUsuario(idUsuario);
+
         for (Categoria categoria : categoriasDoUsuario) {
-            if (categoria.getNome() == nomeCategoria) {
+            if (categoria.getNome().equals(nomeCategoria)) {
                 return categoria;
             }
         }

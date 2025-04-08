@@ -21,7 +21,7 @@ public class TransacaoDAOImpl implements TransacaoDAO {
     @Override
     public List<Transacao> buscarTransacoesDeUsuario(int userid) {
         List<Transacao> transacoesUsuario = new ArrayList<>();
-        // todo
+
         for (Transacao transacao : TransacaoSingleton.getInstance().getTransacoes()) {
             if (transacao.getUserId() == userid) {
                 transacoesUsuario.add(transacao);
@@ -34,7 +34,7 @@ public class TransacaoDAOImpl implements TransacaoDAO {
 
     public List<Transacao> buscarTransacoesComFiltro(Filtro filtro) {
 
-        System.out.println("TrDAO Filtro: " + filtro.getDataInicio().toString() + filtro.getDataFinal().toString() + filtro.getTipoTransacao() + filtro.getCategoria());
+        //System.out.println("TrDAO Filtro: " + filtro.getDataInicio().toString() + filtro.getDataFinal().toString() + filtro.getTipoTransacao() + filtro.getCategoria());
 
         List<Transacao> transacoes = TransacaoSingleton.getInstance().getTransacoes();
 

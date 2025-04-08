@@ -160,8 +160,8 @@ public class TelaHistoricoFiltro extends JPanel {
         String categoria = cbCategoria.getSelectedItem().toString();
         List<Transacao> transacoes = List.of();
 
-        System.out.println("THF: " + tipo + " " + categoria);
-        System.out.println("THF: " + dataInicio + " " +  dataFim);
+        //System.out.println("THF: " + tipo + " " + categoria);
+        //System.out.println("THF: " + dataInicio + " " +  dataFim);
 
         try {
             transacoes = transacaoController.listarTransacoesComFiltro(dataInicio, dataFim, categoria, tipo);

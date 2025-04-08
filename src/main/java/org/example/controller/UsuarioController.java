@@ -5,22 +5,29 @@ import org.example.service.UsuarioService;
 import org.example.service.UsuarioServiceImpl;
 import org.example.util.ValidarEntrada;
 
+import javax.swing.*;
+
 public class UsuarioController {
 
     private final UsuarioService usuarioService = new UsuarioServiceImpl();
 
     public void cadastrarUsuario(String username, String senha){
-        ValidarEntrada.validarStringNuloOuVazia(username, "Insira um nome de usuário.");
-        ValidarEntrada.validarStringNuloOuVazia(senha, "Insira uma senha");
+        try {
+            ValidarEntrada.validarStringNuloOuVazia(username, "Insira um nome de usuário.");
+            ValidarEntrada.validarStringNuloOuVazia(senha, "Insira uma senha");
 
-        int idUsuario = usuarioService.proximoIdUsuario();
+            int idUsuario = usuarioService.proximoIdUsuario();
 
-        if (usuarioService.buscarUsuarioPorNome(username) != null){
-            throw new IllegalArgumentException("Nome de usuario já existe");
+            if (usuarioService.buscarUsuarioPorNome(username) != null){
+                throw new IllegalArgumentException("Nome de usuario já existe");
+            }
+
+            Usuario usuario = new Usuario(idUsuario, username, senha);
+            usuarioService.registrarUsuario(usuario);
+
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
-        Usuario usuario = new Usuario(idUsuario, username, senha);
-        usuarioService.registrarUsuario(usuario);
     }
 
     public void removerUsuario(int idUsuario){
@@ -47,10 +54,15 @@ public class UsuarioController {
     }
 
     public Usuario Login (String username, String senha){
-        ValidarEntrada.validarStringNuloOuVazia(username, "Insira um username");
-        ValidarEntrada.validarStringNuloOuVazia(senha, "Insira uma senha");
+        try {
+            ValidarEntrada.validarStringNuloOuVazia(username, "Insira um username");
+            ValidarEntrada.validarStringNuloOuVazia(senha, "Insira uma senha");
 
-        return usuarioService.validarLogin(username, senha);
+            return usuarioService.validarLogin(username, senha);
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
     }
 
 }

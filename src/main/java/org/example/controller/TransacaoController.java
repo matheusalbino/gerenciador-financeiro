@@ -25,8 +25,10 @@ public class TransacaoController {
             Categoria categoria = this.categoriaService.buscarCategoriaPorNome(nomeCategoria, idUsuario);
 
             double valorTransacao = ValidarEntrada.validateDouble(valorStr);
+
             Date dataTransacao = ValidarEntrada.formatarData(dataStr);
             TipoTransacao tipo = TipoTransacao.getTrasancao(tipoTransacaoStr.toUpperCase());
+            ValidarEntrada.validarStringNuloOuVazia(descricao, "Insira uma descricao");
 
             Transacao transacao = new Transacao(idTransacao, idUsuario, categoria, valorTransacao, dataTransacao, descricao, tipo);
             this.transacaoService.adicionarTransacao(transacao);
@@ -34,8 +36,12 @@ public class TransacaoController {
 
         } catch (Exception e) {
             // todo colocar caixa de erro em todos os controllers, ver onde é apropriado
-
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            if (e instanceof NullPointerException) {
+                JOptionPane.showMessageDialog(null, "Data Invalida", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
     }
@@ -85,7 +91,7 @@ public class TransacaoController {
 
             Filtro filtro = new Filtro(idUsuario, dataInicio, dataFinal, categoria, tipo);
 
-            System.out.println("TrController Filtro: " + filtro.getDataInicio().toString() + filtro.getDataFinal().toString() + filtro.getTipoTransacao() + filtro.getCategoria());
+            //System.out.println("TrController Filtro: " + filtro.getDataInicio().toString() + filtro.getDataFinal().toString() + filtro.getTipoTransacao() + filtro.getCategoria());
 
 
             return transacaoService.buscarTransacoesPorFiltro(filtro);

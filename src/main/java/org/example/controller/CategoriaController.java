@@ -9,6 +9,7 @@ import org.example.service.UsuarioServiceImpl;
 import org.example.*;
 import org.example.util.ValidarEntrada;
 
+import javax.swing.*;
 import java.util.List;
 
 public class CategoriaController {
@@ -24,8 +25,9 @@ public class CategoriaController {
             
             Categoria categoria = new Categoria(idCategoria, usuarioLogado.getId(), nome, descricao);
             categoriaService.adicionarCategoria(categoria);
+
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

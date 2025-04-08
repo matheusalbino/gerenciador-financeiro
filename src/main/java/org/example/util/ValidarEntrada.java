@@ -52,10 +52,8 @@ public final class ValidarEntrada {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             return formatter.parse(data);
         }catch (Exception e){
-            System.out.println("Data nao permitida");
+            return null;
         }
-
-        return null;
     }
 
 

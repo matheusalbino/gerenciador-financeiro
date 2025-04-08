@@ -49,10 +49,13 @@ public class TelaCadastroUsuario extends JFrame {
                 }
 
                 usuarioController.cadastrarUsuario(username, senha);
+
+                /*
                 JOptionPane.showMessageDialog(TelaCadastroUsuario.this,
                         "Usuário cadastrado com sucesso.",
                         "Cadastro Realizado",
                         JOptionPane.INFORMATION_MESSAGE);
+                */
 
                 TelaLogin telaLogin = new TelaLogin();
                 telaLogin.setVisible(true);

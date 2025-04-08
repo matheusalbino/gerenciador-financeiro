@@ -13,7 +13,11 @@ public final class ValidarEntrada {
     private ValidarEntrada() {}
 
     public static double validateDouble(String numero) {
-        return Double.parseDouble(numero);
+        try{
+            return Double.parseDouble(numero);
+        }catch (Exception e){
+            throw new IllegalArgumentException("Valor invalido");
+        }
     }
 
     public static Integer validateInteger(String numero){

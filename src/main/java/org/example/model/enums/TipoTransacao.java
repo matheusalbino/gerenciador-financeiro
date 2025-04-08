@@ -17,7 +17,8 @@ public enum TipoTransacao {
                 return tipoTransacao;
             }
         }
-        throw new IllegalArgumentException("Tipo de transação não encontrado");
+        //throw new IllegalArgumentException("Tipo de transação não encontrado");
+        return null;
     }
 
 }

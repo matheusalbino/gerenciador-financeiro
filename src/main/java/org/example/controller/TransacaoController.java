@@ -7,6 +7,7 @@ import org.example.model.enums.TipoTransacao;
 import org.example.service.*;
 import org.example.util.ValidarEntrada;
 
+import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +30,10 @@ public class TransacaoController {
 
             Transacao transacao = new Transacao(idTransacao, idUsuario, categoria, valorTransacao, dataTransacao, descricao, tipo);
             this.transacaoService.adicionarTransacao(transacao);
+            System.out.println("Transação cadastrada.");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -60,7 +62,13 @@ public class TransacaoController {
             Date dataInicio = ValidarEntrada.formatarData(dataInicioStr);
             Date dataFinal = ValidarEntrada.formatarData(dataFinalStr);
 
-            Categoria categoria = categoriaService.buscarCategoriaPorNome(nomeCategoriaStr, idUsuario);
+            Categoria categoria = null;
+
+            if (nomeCategoriaStr != "Todas"){
+                categoria = categoriaService.buscarCategoriaPorNome(nomeCategoriaStr, idUsuario);
+
+            }
+
             TipoTransacao tipo = TipoTransacao.getTrasancao(tipoTransacaoStr);
 
             Filtro filtro = new Filtro(idUsuario, dataInicio, dataFinal, categoria, tipo);

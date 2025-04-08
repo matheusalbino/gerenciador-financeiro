@@ -33,13 +33,22 @@ public class TransacaoDAOImpl implements TransacaoDAO {
 
 
     public List<Transacao> buscarTransacoesComFiltro(Filtro filtro) {
-        return TransacaoSingleton.getInstance().getTransacoes().stream()
-                .filter(transacao -> transacao.getUserId() == filtro.getUserID())
-                .filter(transacao -> transacao.getData().compareTo(filtro.getDataInicio()) >= 0)
-                .filter(transacao -> transacao.getData().compareTo(filtro.getDataFinal()) <= 0)
-                .filter(transacao -> transacao.getCategoria().getNome() == filtro.getCategoria().getNome())
-                .filter(transacao -> transacao.getTipo() == filtro.getTipoTransacao())
-                .collect(Collectors.toList());
+
+        List<Transacao> transacoes = TransacaoSingleton.getInstance().getTransacoes();
+
+        transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(filtro.getDataInicio()) >= 0).toList();
+        transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(filtro.getDataFinal()) <= 0).toList();
+
+        if (filtro.getCategoria() != null){
+            transacoes = transacoes.stream().filter(transacao -> transacao.getCategoria().getId() == filtro.getCategoria().getId()).toList();
+        }
+
+
+        if(filtro.getTipoTransacao() != null){
+            transacoes = transacoes.stream().filter(transacao -> transacao.getTipo() == filtro.getTipoTransacao()).toList();
+        }
+
+        return transacoes;
     }
 
 

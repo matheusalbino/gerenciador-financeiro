@@ -22,8 +22,10 @@ public class CategoriaDAOImpl implements CategoriaDAO {
     @Override
     public void editarCategoria(Categoria categoria, String nome, String descricao) {
         if (nome != null){
-            if (buscarCategoriaPorNome(nome, categoria.getUserid()) != null){
-                throw new IllegalArgumentException("Categoria ja existe pro usuário");
+            if (!categoria.getNome().equals(nome)) {
+                if (buscarCategoriaPorNome(nome, categoria.getUserid()) != null) {
+                    throw new IllegalArgumentException("Categoria ja existe pro usuário");
+                }
             }
             categoria.setNome(nome);
         }

@@ -33,6 +33,8 @@ public class TransacaoController {
             System.out.println("Transação cadastrada.");
 
         } catch (Exception e) {
+            // todo colocar caixa de erro em todos os controllers, ver onde é apropriado
+
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -55,29 +57,45 @@ public class TransacaoController {
     public List<Transacao> listarTransacoesComFiltro(String dataInicioStr, String dataFinalStr,
                                                      String nomeCategoriaStr, String tipoTransacaoStr) {
         try {
-            // todo esse método aqui está dando erro pois os métodos de verificação nao aceitam null
 
             int idUsuario = usuarioService.getUsuarioLogado().getId();
 
-            Date dataInicio = ValidarEntrada.formatarData(dataInicioStr);
-            Date dataFinal = ValidarEntrada.formatarData(dataFinalStr);
+            Date dataInicio = null;
+            Date dataFinal = null;
+            String categoria = null;
+            String tipo = null;
 
-            Categoria categoria = null;
 
-            if (nomeCategoriaStr != "Todas"){
-                categoria = categoriaService.buscarCategoriaPorNome(nomeCategoriaStr, idUsuario);
-
+            if (!dataInicioStr.isBlank()){
+                dataInicio = ValidarEntrada.formatarData(dataInicioStr);
+            }
+            if (!dataFinalStr.isBlank()){
+                dataFinal = ValidarEntrada.formatarData(dataFinalStr);
             }
 
-            TipoTransacao tipo = TipoTransacao.getTrasancao(tipoTransacaoStr);
+
+            if (nomeCategoriaStr != "Todos"){
+                categoria = categoriaService.buscarCategoriaPorNome(nomeCategoriaStr, idUsuario).getNome();
+            }
+            if (tipoTransacaoStr != "Todos") {
+                tipo = TipoTransacao.getTrasancao(tipoTransacaoStr).getText();
+            }
+
+            // System.out.println("TC datas: " + dataInicio + dataFinal);
 
             Filtro filtro = new Filtro(idUsuario, dataInicio, dataFinal, categoria, tipo);
 
+            System.out.println("TrController Filtro: " + filtro.getDataInicio().toString() + filtro.getDataFinal().toString() + filtro.getTipoTransacao() + filtro.getCategoria());
+
+
             return transacaoService.buscarTransacoesPorFiltro(filtro);
 
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage());
         }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return null;
     }
 
     public void editarTransacao(String nomeCategoria, String valorStr,

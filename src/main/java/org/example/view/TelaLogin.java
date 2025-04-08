@@ -20,7 +20,8 @@ public class TelaLogin extends JFrame {
         super("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setSize(new Dimension(300, 500));
+        this.setSize(new Dimension(1290, 760));
+
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridBagLayout());

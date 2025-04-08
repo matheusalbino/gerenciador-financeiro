@@ -11,6 +11,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     private final CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
     private final TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
 
+    // todo esta permitindo adicionar categorias com o mesmo nome
     @Override
     public void adicionarCategoria(Categoria categoria) {
         if (categoriaDAO.buscarCategoriaPorNome(categoria.getNome(), categoria.getUserid()) != null) {

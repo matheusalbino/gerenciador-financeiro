@@ -21,7 +21,7 @@ public class TransacaoServiceImpl implements TransacaoService {
             throw new IllegalArgumentException("Usuário não pode lançar transações futuras");
         }
 
-        ValidarEntrada.validarStringNuloOuVazia(transacao.getDescricao(), "Insira uma descrição");
+        //ValidarEntrada.validarStringNuloOuVazia(transacao.getDescricao(), "Insira uma descrição");
 
         transacaoDAO.adicionarTransacao(transacao);
     }
@@ -39,10 +39,13 @@ public class TransacaoServiceImpl implements TransacaoService {
 
     @Override
     public List<Transacao> buscarTransacoesPorFiltro(Filtro filtro) {
-        if (filtro.getDataInicio().after(filtro.getDataFinal())) {
-            throw new IllegalArgumentException("Intervalo de datas não permitido");
-        }
+        //if (filtro.getDataInicio() != null && filtro.getDataFinal() != null && filtro.getDataInicio().after(filtro.getDataFinal())) {
+          //  throw new IllegalArgumentException("Intervalo de datas não permitido");
+        //}
 
+        if (filtro.getDataInicio() != null){
+
+        }
         return transacaoDAO.buscarTransacoesComFiltro(filtro);
     }
 

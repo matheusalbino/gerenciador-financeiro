@@ -13,6 +13,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TelaHistoricoFiltro extends JPanel {
@@ -134,15 +135,17 @@ public class TelaHistoricoFiltro extends JPanel {
 
     private void atualizarTabela() {
         modeloTabela.setRowCount(0);
+
         List<Transacao> transacoes = transacaoController.listarTransacoesDoUsuario();
         if (transacoes != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             for (Transacao t : transacoes) {
                 modeloTabela.addRow(new Object[]{
                         t.getId(),
                         t.getValor(),
                         t.getTipo(),
                         t.getCategoria().getNome(),
-                        t.getData(),
+                        formatter.format(t.getData()),
                         t.getDescricao()
                 });
             }
@@ -155,23 +158,28 @@ public class TelaHistoricoFiltro extends JPanel {
         String dataFim = txtDataFim.getText().trim();
         String tipo = cbTipo.getSelectedItem().toString();
         String categoria = cbCategoria.getSelectedItem().toString();
-        // Se "Todos" estiver selecionado, passa string vazia para não filtrar por esse campo
-        if (tipo.equals("Todos")) {
-            tipo = "";
+        List<Transacao> transacoes = List.of();
+
+        System.out.println("THF: " + tipo + " " + categoria);
+        System.out.println("THF: " + dataInicio + " " +  dataFim);
+
+        try {
+            transacoes = transacaoController.listarTransacoesComFiltro(dataInicio, dataFim, categoria, tipo);
+        }catch (Exception e){
+            System.out.println("THF: " + e.getMessage());
         }
-        if (categoria.equals("Todos")) {
-            categoria = "";
-        }
-        List<Transacao> transacoes = transacaoController.listarTransacoesComFiltro(dataInicio, dataFim, categoria, tipo);
+
         modeloTabela.setRowCount(0);
+
         if (transacoes != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             for (Transacao t : transacoes) {
                 modeloTabela.addRow(new Object[]{
                         t.getId(),
                         t.getValor(),
                         t.getTipo(),
                         t.getCategoria().getNome(),
-                        t.getData(),
+                        formatter.format(t.getData()),
                         t.getDescricao()
                 });
             }

@@ -8,16 +8,16 @@ import java.util.Date;
 public class Filtro {
     private Integer userID;
     private Date dataInicio;// = util.ValidarEntrada.formatarData("01/01/1888");
-    private Date dataFinal = new Date();
-    private Categoria categoria;
-    private TipoTransacao tipoTransacao = null;
+    private Date dataFinal; // = new Date();
+    private String categoria;
+    private String tipoTransacao = null;
 
-    public Filtro(Integer userID, Date dataInicio, Date dataFinal, Categoria categoria, TipoTransacao tipoTransacao) {
+    public Filtro(Integer userID, Date dataInicio, Date dataFinal, String categoria, String tipoTransacao) {
         this.userID = userID; // Valor padrão para userID
         this.dataInicio = dataInicio != null ? dataInicio : new Date(0); // Valor padrão: 01/01/1970
         this.dataFinal = dataFinal != null ? dataFinal : new Date(); // Valor padrão: data atual
-        this.categoria = categoria != null ? categoria : new Categoria(); // Assumindo um construtor vazio na classe Categoria
-        this.tipoTransacao = tipoTransacao != null ? tipoTransacao : TipoTransacao.DESPESA; // Valor padrão, exemplo
+        this.categoria = categoria;
+        this.tipoTransacao = tipoTransacao;
     }
 
 
@@ -49,19 +49,19 @@ public class Filtro {
     }
 
 
-    public TipoTransacao getTipoTransacao() {
+    public String getTipoTransacao() {
         return tipoTransacao;
     }
 
-    public void setTipoTransacao(TipoTransacao tipoTransacao) {
+    public void setTipoTransacao(String tipoTransacao) {
         this.tipoTransacao = tipoTransacao;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 }

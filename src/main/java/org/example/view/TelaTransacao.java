@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TelaTransacao extends JPanel {
@@ -54,7 +55,7 @@ public class TelaTransacao extends JPanel {
                 );
                 limparFormulario();
                 atualizarTabela();
-                System.out.println("Transação cadastrada.");
+               // System.out.println("Transação cadastrada.");
             }catch (Exception ex){
                 System.out.println(ex.getMessage());
             }
@@ -211,6 +212,7 @@ public class TelaTransacao extends JPanel {
     private void atualizarTabela() {
         modeloTabela.setRowCount(0);
         List<Transacao> transacoes = transacaoController.listarTransacoesDoUsuario();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         if (transacoes != null) {
             for (Transacao t : transacoes) {
                 modeloTabela.addRow(new Object[]{
@@ -218,7 +220,7 @@ public class TelaTransacao extends JPanel {
                         t.getValor(),
                         t.getTipo(),
                         t.getCategoria().getNome(),
-                        t.getData(),
+                        formatter.format(t.getData()),
                         t.getDescricao()
                 });
             }

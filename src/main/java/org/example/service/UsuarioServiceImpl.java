@@ -1,11 +1,13 @@
 package org.example.service;
 
 import org.example.dao.*;
+import org.example.dao.singletonImpl.CategoriaDAOImpl;
+import org.example.dao.singletonImpl.TransacaoDAOImpl;
+import org.example.dao.singletonImpl.UsuarioDAOImpl;
 import org.example.model.Categoria;
 import org.example.model.Transacao;
 import org.example.model.Usuario;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.List;
 
 public class UsuarioServiceImpl implements UsuarioService {

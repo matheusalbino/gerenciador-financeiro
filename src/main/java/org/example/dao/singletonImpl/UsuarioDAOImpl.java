@@ -1,4 +1,5 @@
-package org.example.dao;
+package org.example.dao.singletonImpl;
+import org.example.dao.UsuarioDAO;
 import org.example.model.Usuario;
 import org.example.singleton.UsuarioSingleton;
 

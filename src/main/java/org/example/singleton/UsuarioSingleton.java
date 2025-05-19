@@ -1,6 +1,5 @@
 package org.example.singleton;
 
-import org.example.dao.UsuarioDAOImpl;
 import org.example.model.Usuario;
 
 import java.util.ArrayList;

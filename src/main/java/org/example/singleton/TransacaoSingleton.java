@@ -1,6 +1,5 @@
 package org.example.singleton;
 
-import org.example.dao.TransacaoDAOImpl;
 import org.example.model.Transacao;
 
 import java.util.ArrayList;

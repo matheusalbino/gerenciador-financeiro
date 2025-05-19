@@ -1,8 +1,8 @@
-package org.example.dao;
+package org.example.dao.singletonImpl;
 
+import org.example.dao.CategoriaDAO;
 import org.example.model.Categoria;
 import org.example.singleton.CategoriaSingleton;
-import org.example.singleton.UsuarioSingleton;
 
 import java.util.ArrayList;
 import java.util.List;

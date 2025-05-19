@@ -10,5 +10,4 @@ public interface CategoriaDAO {
     void editarCategoria(Categoria categoria, String nome, String descricao);
     List<Categoria> listarCategoriasDeUsuario(int id);
     Categoria buscarCategoriaPorNome(String nomeCategoria, int idUsuario);
-    // int ultimaCategoria(int idUsuario);
 }

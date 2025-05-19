@@ -1,12 +1,12 @@
-package org.example.dao;
+package org.example.dao.singletonImpl;
 
+import org.example.dao.TransacaoDAO;
 import org.example.model.Filtro;
 import org.example.model.Transacao;
 import org.example.singleton.TransacaoSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TransacaoDAOImpl implements TransacaoDAO {
 
@@ -36,22 +36,8 @@ public class TransacaoDAOImpl implements TransacaoDAO {
 
         //System.out.println("TrDAO Filtro: " + filtro.getDataInicio().toString() + filtro.getDataFinal().toString() + filtro.getTipoTransacao() + filtro.getCategoria());
 
-        List<Transacao> transacoes = TransacaoSingleton.getInstance().getTransacoes();
+        return TransacaoSingleton.getInstance().getTransacoes();
 
-        if (filtro.getDataInicio() != null) {
-            transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(filtro.getDataInicio()) >= 0).toList();
-        }
-        if (filtro.getDataFinal() != null) {
-            transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(filtro.getDataFinal()) <= 0).toList();
-        }
-        if (filtro.getCategoria() != null){
-            transacoes = transacoes.stream().filter(transacao -> transacao.getCategoria().getNome() == filtro.getCategoria()).toList();
-        }
-        if(filtro.getTipoTransacao() != null){
-            transacoes = transacoes.stream().filter(transacao -> transacao.getTipo().getText() == filtro.getTipoTransacao()).toList();
-        }
-
-        return transacoes;
     }
 
 

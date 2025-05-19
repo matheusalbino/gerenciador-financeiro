@@ -1,9 +1,9 @@
 package org.example.service;
 
 import org.example.dao.*;
+import org.example.dao.singletonImpl.TransacaoDAOImpl;
 import org.example.model.Filtro;
 import org.example.model.Transacao;
-import org.example.util.ValidarEntrada;
 
 import java.util.Date;
 import java.util.List;
@@ -43,10 +43,26 @@ public class TransacaoServiceImpl implements TransacaoService {
           //  throw new IllegalArgumentException("Intervalo de datas não permitido");
         //}
 
-        if (filtro.getDataInicio() != null){
+        List<Transacao> transacoes = transacaoDAO.buscarTransacoesComFiltro(filtro);
 
+        if (transacoes.isEmpty()){
+            return transacoes;
         }
-        return transacaoDAO.buscarTransacoesComFiltro(filtro);
+
+        if (filtro.getDataInicio() != null) {
+            transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(filtro.getDataInicio()) >= 0).toList();
+        }
+        if (filtro.getDataFinal() != null) {
+            transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(filtro.getDataFinal()) <= 0).toList();
+        }
+        if (filtro.getCategoria() != null){
+            transacoes = transacoes.stream().filter(transacao -> transacao.getCategoria().getNome() == filtro.getCategoria()).toList();
+        }
+        if(filtro.getTipoTransacao() != null){
+            transacoes = transacoes.stream().filter(transacao -> transacao.getTipo().getText() == filtro.getTipoTransacao()).toList();
+        }
+
+        return transacoes;
     }
 
     @Override

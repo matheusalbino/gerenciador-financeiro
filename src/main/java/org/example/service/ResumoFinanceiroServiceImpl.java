@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.dao.TransacaoDAO;
-import org.example.dao.TransacaoDAOImpl;
+import org.example.dao.singletonImpl.TransacaoDAOImpl;
 import org.example.model.ResumoFinanceiro;
 import org.example.model.Transacao;
 

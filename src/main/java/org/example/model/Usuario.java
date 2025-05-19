@@ -1,8 +1,23 @@
 package org.example.model;
 
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Usuario")
 public class Usuario {
+
+    @Id
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "senha")
     private String senha;
 
     public Usuario(int id, String login, String senha){
@@ -10,6 +25,8 @@ public class Usuario {
         this.login = login;
         this.senha = senha;
     }
+
+    public Usuario(){ }
 
     public void FazerLogin(){
 

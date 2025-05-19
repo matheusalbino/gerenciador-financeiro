@@ -32,15 +32,6 @@ public class TransacaoDAOImpl implements TransacaoDAO {
     }
 
 
-    public List<Transacao> buscarTransacoesComFiltro(Filtro filtro) {
-
-        //System.out.println("TrDAO Filtro: " + filtro.getDataInicio().toString() + filtro.getDataFinal().toString() + filtro.getTipoTransacao() + filtro.getCategoria());
-
-        return TransacaoSingleton.getInstance().getTransacoes();
-
-    }
-
-
     @Override
     public Transacao buscarTransacaoPorId(int idTransacao){
         for (Transacao transacao : TransacaoSingleton.getInstance().getTransacoes()){

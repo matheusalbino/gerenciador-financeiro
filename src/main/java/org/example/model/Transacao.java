@@ -1,16 +1,35 @@
 package org.example.model;
 
+import jakarta.persistence.*;
 import org.example.model.enums.TipoTransacao;
 
 import java.util.Date;
 
+@Entity
+@Table(name = "Transacao")
 public class Transacao {
+
+    @Id
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "userid")
     private int userid;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
+
+    @Column(name = "valor", columnDefinition = "TEXT")
     private double valor;
+
+    @Column(name = "data", columnDefinition = "TEXT")
     private Date data;
+
+    @Column(name = "descricao")
     private String descricao;
+
+    @Column(name = "tipo", columnDefinition = "TEXT")
     private TipoTransacao tipo;
 
     public Transacao(int id, int userid, Categoria categoria, double valor, Date data, String descricao, TipoTransacao tipo){
@@ -21,6 +40,10 @@ public class Transacao {
         this.data = data;
         this.descricao = descricao;
         this.tipo = tipo;
+    }
+
+    public Transacao() {
+
     }
 
     // Getters e setters

@@ -43,7 +43,7 @@ public class TransacaoServiceImpl implements TransacaoService {
           //  throw new IllegalArgumentException("Intervalo de datas não permitido");
         //}
 
-        List<Transacao> transacoes = transacaoDAO.buscarTransacoesComFiltro(filtro);
+        List<Transacao> transacoes = transacaoDAO.buscarTransacoesDeUsuario(filtro.getUserID());
 
         if (transacoes.isEmpty()){
             return transacoes;

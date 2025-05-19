@@ -35,8 +35,11 @@ public class CategoriaController {
         int idUsuario = usuarioService.getUsuarioLogado().getId();
 
         ValidarEntrada.validarStringVazia(nomeCategoria, "Nome de categoria inválido");
-
-        categoriaService.removerCategoria(nomeCategoria, idUsuario);
+        try {
+            categoriaService.removerCategoria(nomeCategoria, idUsuario);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void editarCategoria(String nomeCategoria, String novoNome, String novaDescricao){

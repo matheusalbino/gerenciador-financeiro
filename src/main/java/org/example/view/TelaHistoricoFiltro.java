@@ -11,24 +11,21 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
 public class TelaHistoricoFiltro extends JPanel {
-    private TransacaoController transacaoController = new TransacaoController();
-    private CategoriaController categoriaController = new CategoriaController();
+    private final TransacaoController transacaoController = new TransacaoController();
+    private final CategoriaController categoriaController = new CategoriaController();
 
-    private JTable tabelaHistorico;
-    private DefaultTableModel modeloTabela;
+    private final DefaultTableModel modeloTabela;
 
     // Campos para filtro
-    private JTextField txtDataInicio;
-    private JTextField txtDataFim;
-    private JComboBox<String> cbTipo;
-    private JComboBox<String> cbCategoria;
-    private JButton btnFiltrar;
+    private final JTextField txtDataInicio;
+    private final JTextField txtDataFim;
+    private final JComboBox<String> cbTipo;
+    private final JComboBox<String> cbCategoria;
 
     public TelaHistoricoFiltro() {
         setLayout(new BorderLayout(10, 10));
@@ -73,7 +70,7 @@ public class TelaHistoricoFiltro extends JPanel {
         gbc.gridy = 3;
         painelFiltro.add(cbCategoria, gbc);
 
-        btnFiltrar = new JButton("Filtrar");
+        JButton btnFiltrar = new JButton("Filtrar");
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
@@ -86,7 +83,7 @@ public class TelaHistoricoFiltro extends JPanel {
                 return false;
             }
         };
-        tabelaHistorico = new JTable(modeloTabela);
+        JTable tabelaHistorico = new JTable(modeloTabela);
 
         tabelaHistorico.getColumnModel().getColumn(0).setMinWidth(0);
         tabelaHistorico.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -98,12 +95,7 @@ public class TelaHistoricoFiltro extends JPanel {
         add(scrollTabela, BorderLayout.CENTER);
 
 
-        btnFiltrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                filtrarTransacoes();
-            }
-        });
+        btnFiltrar.addActionListener(e -> filtrarTransacoes());
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -128,7 +120,7 @@ public class TelaHistoricoFiltro extends JPanel {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Erro ao listar categorias: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -156,17 +148,15 @@ public class TelaHistoricoFiltro extends JPanel {
     private void filtrarTransacoes() {
         String dataInicio = txtDataInicio.getText().trim();
         String dataFim = txtDataFim.getText().trim();
-        String tipo = cbTipo.getSelectedItem().toString();
-        String categoria = cbCategoria.getSelectedItem().toString();
+        String tipo = Objects.requireNonNull(cbTipo.getSelectedItem()).toString();
+        String categoria = Objects.requireNonNull(cbCategoria.getSelectedItem()).toString();
         List<Transacao> transacoes = List.of();
 
-        //System.out.println("THF: " + tipo + " " + categoria);
-        //System.out.println("THF: " + dataInicio + " " +  dataFim);
 
         try {
             transacoes = transacaoController.listarTransacoesComFiltro(dataInicio, dataFim, categoria, tipo);
         }catch (Exception e){
-            System.out.println("THF: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
         modeloTabela.setRowCount(0);

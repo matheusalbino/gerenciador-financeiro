@@ -1,15 +1,15 @@
 package org.example.service;
 
 import org.example.dao.*;
-import org.example.dao.singletonImpl.TransacaoDAOImpl;
+import org.example.factory.DAOFactory;
 import org.example.model.Filtro;
 import org.example.model.Transacao;
-
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class TransacaoServiceImpl implements TransacaoService {
-    private final TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
+    private final TransacaoDAO transacaoDAO = DAOFactory.getTransacaoDAO();
 
     @Override
     public void adicionarTransacao(Transacao transacao) {
@@ -20,8 +20,6 @@ public class TransacaoServiceImpl implements TransacaoService {
         if (transacao.getData().compareTo(new Date()) > 0) {
             throw new IllegalArgumentException("Usuário não pode lançar transações futuras");
         }
-
-        //ValidarEntrada.validarStringNuloOuVazia(transacao.getDescricao(), "Insira uma descrição");
 
         transacaoDAO.adicionarTransacao(transacao);
     }
@@ -39,9 +37,6 @@ public class TransacaoServiceImpl implements TransacaoService {
 
     @Override
     public List<Transacao> buscarTransacoesPorFiltro(Filtro filtro) {
-        //if (filtro.getDataInicio() != null && filtro.getDataFinal() != null && filtro.getDataInicio().after(filtro.getDataFinal())) {
-          //  throw new IllegalArgumentException("Intervalo de datas não permitido");
-        //}
 
         List<Transacao> transacoes = transacaoDAO.buscarTransacoesDeUsuario(filtro.getUserID());
 
@@ -56,10 +51,10 @@ public class TransacaoServiceImpl implements TransacaoService {
             transacoes = transacoes.stream().filter(transacao -> transacao.getData().compareTo(filtro.getDataFinal()) <= 0).toList();
         }
         if (filtro.getCategoria() != null){
-            transacoes = transacoes.stream().filter(transacao -> transacao.getCategoria().getNome() == filtro.getCategoria()).toList();
+            transacoes = transacoes.stream().filter(transacao -> Objects.equals(transacao.getCategoria().getNome(), filtro.getCategoria())).toList();
         }
         if(filtro.getTipoTransacao() != null){
-            transacoes = transacoes.stream().filter(transacao -> transacao.getTipo().getText() == filtro.getTipoTransacao()).toList();
+            transacoes = transacoes.stream().filter(transacao -> transacao.getTipo().getText().equals(filtro.getTipoTransacao())).toList();
         }
 
         return transacoes;
@@ -77,30 +72,13 @@ public class TransacaoServiceImpl implements TransacaoService {
     }
 
     @Override
-    public Transacao buscarTransacaoPorID(int idTransacao) {
-        Transacao transacao = transacaoDAO.buscarTransacaoPorId(idTransacao);
-
-        if (transacao == null) {
-            throw new IllegalArgumentException("Transação não encontrada");
-        }
-
-        return transacao;
-    }
-
-    @Override
-    public int ultimaTransacao(int idUsuario) {
-        List<Transacao> listaTransacao = buscarTransacoesPorIdUsuario(idUsuario);
-
-        if (listaTransacao == null || listaTransacao.isEmpty()) {
-            return 0;
-        }
-
-        return listaTransacao.getLast().getId();
+    public int ultimaTransacao() {
+        return transacaoDAO.buscarUltimaTransacao();
     }
 
     @Override
     public int proximoIdTransacao(int idUsuario) {
-        return ultimaTransacao(idUsuario) + 1;
+        return ultimaTransacao() + 1;
     }
 
 }

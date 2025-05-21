@@ -1,6 +1,5 @@
 package org.example.model;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -28,11 +27,6 @@ public class Usuario {
 
     public Usuario(){ }
 
-    public void FazerLogin(){
-
-    }
-
-
     // Getters e setters
     public int getId() {
         return id;
@@ -46,16 +40,8 @@ public class Usuario {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-
     public String getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
 }

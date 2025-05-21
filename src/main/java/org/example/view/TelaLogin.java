@@ -5,12 +5,9 @@ import org.example.model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class TelaLogin extends JFrame {
-
-
-    private UsuarioController usuarioController = new UsuarioController();
+    private final UsuarioController usuarioController = new UsuarioController();
     private JTextField txtUsername;
     private JPasswordField txtSenha;
     private JButton btnLogin;
@@ -35,32 +32,26 @@ public class TelaLogin extends JFrame {
 
         add(panel);
 
-        btnLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = txtUsername.getText();
-                String senha = new String(txtSenha.getPassword());
-                Usuario usuario = usuarioController.Login(username, senha);
-                if (usuario != null) {
-                    JanelaPrincipal janelaPrincipal = new JanelaPrincipal();
-                    janelaPrincipal.setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(TelaLogin.this,
-                            "Usuário ou senha não encontrado.",
-                            "Erro de Login",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+        btnLogin.addActionListener(e -> {
+            String username = txtUsername.getText();
+            String senha = new String(txtSenha.getPassword());
+            Usuario usuario = usuarioController.Login(username, senha);
+            if (usuario != null) {
+                JanelaPrincipal janelaPrincipal = new JanelaPrincipal();
+                janelaPrincipal.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(TelaLogin.this,
+                        "Usuário ou senha não encontrado.",
+                        "Erro de Login",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        btnCriarConta.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario();
-                telaCadastro.setVisible(true);
-                dispose();
-            }
+        btnCriarConta.addActionListener(e -> {
+            TelaCadastroUsuario telaCadastro = new TelaCadastroUsuario();
+            telaCadastro.setVisible(true);
+            dispose();
         });
     }
 

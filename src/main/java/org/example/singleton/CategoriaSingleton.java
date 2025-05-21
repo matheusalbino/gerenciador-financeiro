@@ -14,9 +14,11 @@ public class CategoriaSingleton {
     }
 
     public static synchronized CategoriaSingleton getInstance() {
+
         if (instancia == null) {
             instancia = new CategoriaSingleton();
         }
+
         return instancia;
     }
 

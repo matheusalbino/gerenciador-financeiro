@@ -2,6 +2,7 @@ package org.example.dao.JPAImpl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.example.dao.CategoriaDAO;
 import org.example.model.Categoria;
@@ -94,6 +95,22 @@ public class CategoriaJPA implements CategoriaDAO {
     }
 
     @Override
+    public int ultimaCategoria(){
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try{
+            Query q = em.createQuery("SELECT MAX(id) FROM Categoria");
+            Integer result = (Integer) q.getSingleResult();
+            if (result == null){
+                return 0;
+            }
+            return result;
+        }finally {
+            em.close();
+        }
+    }
+
+    @Override
     public Categoria buscarCategoriaPorNome(String nomeCategoria, int idUsuario){
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -101,6 +118,11 @@ public class CategoriaJPA implements CategoriaDAO {
             TypedQuery<Categoria> q = em.createQuery("SELECT c FROM Categoria c WHERE c.userid = :userid AND c.nome = :cat_nome", Categoria.class);
             q.setParameter("userid", idUsuario);
             q.setParameter("cat_nome", nomeCategoria);
+
+            if (q.getResultList().isEmpty()){
+                return null;
+            }
+
             return q.getResultList().getFirst();
         }finally {
             em.close();

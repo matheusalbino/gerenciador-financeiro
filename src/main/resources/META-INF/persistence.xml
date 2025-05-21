@@ -5,6 +5,8 @@
         <class>org.example.model.Categoria</class>
         <class>org.example.model.Usuario</class>
         <class>org.example.model.Transacao</class>
+        <class>org.example.model.SessaoUsuario</class>
+
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
@@ -18,7 +20,6 @@
             <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.use_sql_comments" value="false"/>
             <property name="hibernate.jdbc.batch_size" value="20"/>
-
         </properties>
 
     </persistence-unit>

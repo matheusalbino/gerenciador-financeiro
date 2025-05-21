@@ -5,11 +5,9 @@ import org.example.model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TelaHome extends JPanel {
-    private UsuarioController usuarioController = new UsuarioController();
+    private final UsuarioController usuarioController = new UsuarioController();
 
     public TelaHome() {
         setLayout(new BorderLayout());
@@ -37,15 +35,12 @@ public class TelaHome extends JPanel {
         add(topo, BorderLayout.NORTH);
         add(textoInfo, BorderLayout.CENTER);
 
-        btnLogout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioController.logoutUsuario();
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(TelaHome.this);
-                frame.dispose();
-                TelaLogin telaLogin = new TelaLogin();
-                telaLogin.setVisible(true);
-            }
+        btnLogout.addActionListener(e -> {
+            usuarioController.logoutUsuario();
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(TelaHome.this);
+            frame.dispose();
+            TelaLogin telaLogin = new TelaLogin();
+            telaLogin.setVisible(true);
         });
     }
 }

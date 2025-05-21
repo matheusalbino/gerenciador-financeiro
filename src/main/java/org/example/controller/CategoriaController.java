@@ -6,7 +6,6 @@ import org.example.service.CategoriaService;
 import org.example.service.CategoriaServiceImpl;
 import org.example.service.UsuarioService;
 import org.example.service.UsuarioServiceImpl;
-import org.example.*;
 import org.example.util.ValidarEntrada;
 
 import javax.swing.*;
@@ -22,7 +21,7 @@ public class CategoriaController {
             int idCategoria = categoriaService.proximoIdCategoria(usuarioLogado.getId());
 
             ValidarEntrada.validarStringNuloOuVazia(nome, "Nome vazio não permitido");
-            
+
             Categoria categoria = new Categoria(idCategoria, usuarioLogado.getId(), nome, descricao);
             categoriaService.adicionarCategoria(categoria);
 
@@ -33,8 +32,8 @@ public class CategoriaController {
 
     public void removerCategoria(String nomeCategoria){
         int idUsuario = usuarioService.getUsuarioLogado().getId();
-
         ValidarEntrada.validarStringVazia(nomeCategoria, "Nome de categoria inválido");
+
         try {
             categoriaService.removerCategoria(nomeCategoria, idUsuario);
         } catch (Exception e) {

@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class JanelaPrincipal extends JFrame {
-    private JTabbedPane tabbedPane = new JTabbedPane();
 
     public JanelaPrincipal() {
+        JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Home", new TelaHome());
         tabbedPane.addTab("Transação", new TelaTransacao());
         tabbedPane.addTab("Categorias", new TelaCategoria());

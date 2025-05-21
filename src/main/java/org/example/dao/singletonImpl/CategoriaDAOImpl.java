@@ -60,4 +60,10 @@ public class CategoriaDAOImpl implements CategoriaDAO {
         return null;
     }
 
+
+    @Override
+    public int ultimaCategoria() {
+        return CategoriaSingleton.getInstance().getCategorias().size();
+    }
+
 }

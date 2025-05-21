@@ -2,25 +2,21 @@ package org.example.view;
 
 import org.example.controller.CategoriaController;
 import org.example.model.Categoria;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
 public class TelaCategoria extends JPanel {
-    private CategoriaController categoriaController = new CategoriaController();
+    private final CategoriaController categoriaController = new CategoriaController();
 
-    private JTable tabelaCategorias;
-    private DefaultTableModel modeloTabela;
-    private JButton btnEditar;
-    private JButton btnDeletar;
+    private final JTable tabelaCategorias;
+    private final DefaultTableModel modeloTabela;
+    private final JButton btnEditar;
+    private final JButton btnDeletar;
     private JButton btnCadastrar;
     private JButton btnAtualizar;
-
     private JTextField txtNome;
     private JTextArea txtDescricao;
 
@@ -65,7 +61,7 @@ public class TelaCategoria extends JPanel {
                 atualizarTabela();
             });
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
         btnAtualizar.addActionListener(e -> {
@@ -80,7 +76,6 @@ public class TelaCategoria extends JPanel {
                 btnAtualizar.setEnabled(false);
                 btnCadastrar.setEnabled(true);
                 categoriaSelecionadaNome = null;
-                System.out.println("Categoria editada.");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -98,16 +93,13 @@ public class TelaCategoria extends JPanel {
         JScrollPane scrollTabela = new JScrollPane(tabelaCategorias);
         scrollTabela.setBorder(new LineBorder(Color.GRAY));
 
-        tabelaCategorias.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting() && tabelaCategorias.getSelectedRow() != -1) {
-                    btnEditar.setEnabled(true);
-                    btnDeletar.setEnabled(true);
-                } else {
-                    btnEditar.setEnabled(false);
-                    btnDeletar.setEnabled(false);
-                }
+        tabelaCategorias.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && tabelaCategorias.getSelectedRow() != -1) {
+                btnEditar.setEnabled(true);
+                btnDeletar.setEnabled(true);
+            } else {
+                btnEditar.setEnabled(false);
+                btnDeletar.setEnabled(false);
             }
         });
 
@@ -132,7 +124,6 @@ public class TelaCategoria extends JPanel {
                 String nomeCategoria = modeloTabela.getValueAt(linhaSelecionada, 0).toString();
                 categoriaController.removerCategoria(nomeCategoria);
                 atualizarTabela();
-                System.out.println("Categoria removida.");
             }
         });
 
@@ -200,7 +191,7 @@ public class TelaCategoria extends JPanel {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

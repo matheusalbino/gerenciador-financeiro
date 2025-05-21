@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.model.Filtro;
 import org.example.model.ResumoFinanceiro;
 import org.example.model.Transacao;
 
@@ -11,7 +10,6 @@ public interface ResumoFinanceiroService {
     double totalEntradas(List<Transacao> transacoes);
     double totalDespesas(List<Transacao> transacoes);
     double saldoAtual(double totalEntradas, double totalDespesas);
-
     ResumoFinanceiro gerarResumo(int userID);
     ResumoFinanceiro gerarResumo(int userID, Date dataInicio, Date dataFinal);
 }

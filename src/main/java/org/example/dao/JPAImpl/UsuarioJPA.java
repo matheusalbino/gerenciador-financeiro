@@ -13,14 +13,10 @@ import java.util.List;
 
 public class UsuarioJPA implements UsuarioDAO {
 
-    /**
-     * @param usuario
-     */
     @Override
     public void cadastrarUsuario(Usuario usuario) {
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
-
         try{
             tx.begin();
             em.persist(usuario);
@@ -35,9 +31,6 @@ public class UsuarioJPA implements UsuarioDAO {
         }
     }
 
-    /**
-     * @param usuario
-     */
     @Override
     public void removerUsuario(Usuario usuario) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -61,10 +54,6 @@ public class UsuarioJPA implements UsuarioDAO {
         }
     }
 
-    /**
-     * @param username
-     * @return
-     */
     @Override
     public Usuario buscarPorNome(String username) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -72,13 +61,14 @@ public class UsuarioJPA implements UsuarioDAO {
         TypedQuery<Usuario> q = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :nome", Usuario.class);
         q.setParameter("nome", username);
 
-        return q.getResultList().getFirst();
+        List<Usuario> busca = q.getResultList();
+        if (!busca.isEmpty()){
+            return q.getResultList().getFirst();
+        }
+
+        return null;
     }
 
-    /**
-     * @param idUsuario
-     * @return
-     */
     @Override
     public Usuario buscarUsuarioPorId(int idUsuario) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -86,9 +76,6 @@ public class UsuarioJPA implements UsuarioDAO {
         return em.find(Usuario.class, idUsuario);
     }
 
-    /**
-     * @return
-     */
     @Override
     public List<Usuario> listarUsuarios() {
         EntityManager em = JPAUtil.getEntityManager();
@@ -98,11 +85,6 @@ public class UsuarioJPA implements UsuarioDAO {
         return q.getResultList();
     }
 
-
-    // precisa de outra tabela
-    /**
-     * @param usuario
-     */
     @Override
     public void logarUsuario(Usuario usuario) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -124,14 +106,8 @@ public class UsuarioJPA implements UsuarioDAO {
         }finally {
             em.close();
         }
-
-
-
     }
 
-    /**
-     * @return
-     */
     @Override
     public Usuario getUsuarioLogado() {
         EntityManager em = JPAUtil.getEntityManager();
@@ -141,14 +117,23 @@ public class UsuarioJPA implements UsuarioDAO {
         return em.find(Usuario.class, q.getResultList().getFirst());
     }
 
-    /**
-     *
-     */
     @Override
     public void logoutUsuario() {
         EntityManager em = JPAUtil.getEntityManager();
-
-        TypedQuery<SessaoUsuario> q = em.createQuery("UPDATE SessaoUsuario SET idUsuario = null WHERE id = 0", SessaoUsuario.class);
-
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            Query q = em.createQuery("UPDATE SessaoUsuario SET idUsuario = null WHERE id = 0");
+            q.executeUpdate();
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx.isActive()){
+                tx.rollback();
+            }
+            throw e;
+        }
+        finally {
+            em.close();
+        }
     }
 }

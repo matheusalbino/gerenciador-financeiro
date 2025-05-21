@@ -10,7 +10,7 @@ public enum TipoTransacao {
         return this.name();
     }
 
-    public static TipoTransacao getTrasancao(String tipo){
+    public static TipoTransacao getTransacao(String tipo){
         for (TipoTransacao tipoTransacao : Arrays.stream(TipoTransacao.values()).toList()){
             if (tipoTransacao.getText().equalsIgnoreCase(tipo)){
                 return tipoTransacao;

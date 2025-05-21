@@ -7,22 +7,21 @@ import org.example.model.Categoria;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
 public class TelaTransacao extends JPanel {
-    private TransacaoController transacaoController = new TransacaoController();
-    private CategoriaController categoriaController = new CategoriaController();
+    private final TransacaoController transacaoController = new TransacaoController();
+    private final CategoriaController categoriaController = new CategoriaController();
 
-    private JTable tabelaTransacoes;
-    private DefaultTableModel modeloTabela;
-    private JButton btnDeletar;
+    private final JTable tabelaTransacoes;
+    private final DefaultTableModel modeloTabela;
+    private final JButton btnDeletar;
     private JButton btnCadastrar;
 
     private JTextField txtValor;
@@ -47,17 +46,16 @@ public class TelaTransacao extends JPanel {
         btnCadastrar.addActionListener(e -> {
             try {
                 transacaoController.cadastrarTransacao(
-                        cbCategoria.getSelectedItem().toString(),
+                        Objects.requireNonNull(cbCategoria.getSelectedItem()).toString(),
                         txtValor.getText(),
                         txtData.getText(),
                         taDescricao.getText(),
-                        cbTipo.getSelectedItem().toString()
+                        Objects.requireNonNull(cbTipo.getSelectedItem()).toString()
                 );
                 limparFormulario();
                 atualizarTabela();
-               // System.out.println("Transação cadastrada.");
             }catch (Exception ex){
-                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -82,16 +80,9 @@ public class TelaTransacao extends JPanel {
         btnDeletar.setEnabled(false);
         painelAcoes.add(btnDeletar);
 
-        tabelaTransacoes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting() && tabelaTransacoes.getSelectedRow() != -1) {
-                    btnDeletar.setEnabled(true);
-                } else {
-                    btnDeletar.setEnabled(false);
-                }
-            }
-        });
+        tabelaTransacoes.getSelectionModel().addListSelectionListener(e ->
+                btnDeletar.setEnabled(!e.getValueIsAdjusting() && tabelaTransacoes.getSelectedRow() != -1)
+        );
 
         btnDeletar.addActionListener(e -> {
             int linhaSelecionada = tabelaTransacoes.getSelectedRow();
@@ -99,7 +90,6 @@ public class TelaTransacao extends JPanel {
                 String idTransacao = modeloTabela.getValueAt(linhaSelecionada, 0).toString();
                 transacaoController.removerTransacao(idTransacao);
                 atualizarTabela();
-                System.out.println("Transação removida.");
             }
         });
 
@@ -195,7 +185,7 @@ public class TelaTransacao extends JPanel {
                 cbCategoria.addItem("Nenhuma categoria cadastrada");
             }
         } catch (Exception e) {
-            System.out.println("Erro ao listar categorias: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -219,8 +209,9 @@ public class TelaTransacao extends JPanel {
                         t.getId(),
                         t.getValor(),
                         t.getTipo(),
+                        // formater aqui
                         t.getCategoria().getNome(),
-                        formatter.format(t.getData()),
+                        t.getData().toString(),
                         t.getDescricao()
                 });
             }

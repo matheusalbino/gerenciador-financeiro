@@ -1,7 +1,6 @@
 package org.example.singleton;
 
 import org.example.model.Usuario;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +14,7 @@ public class UsuarioSingleton {
     }
 
     public static synchronized UsuarioSingleton getInstance() {
+
         if (instancia == null) {
             instancia = new UsuarioSingleton();
         }

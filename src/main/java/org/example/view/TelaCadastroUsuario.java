@@ -1,13 +1,11 @@
 package org.example.view;
 
 import org.example.controller.UsuarioController;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class TelaCadastroUsuario extends JFrame {
-    private UsuarioController usuarioController = new UsuarioController();
+    private final UsuarioController usuarioController = new UsuarioController();
 
     private JTextField txtUsername;
     private JPasswordField txtSenha;
@@ -33,43 +31,29 @@ public class TelaCadastroUsuario extends JFrame {
 
         add(panel);
 
-        btnCadastrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = txtUsername.getText();
-                String senha = new String(txtSenha.getPassword());
-                String confirmSenha = new String(txtConfirmSenha.getPassword());
+        btnCadastrar.addActionListener(e -> {
+            String username = txtUsername.getText();
+            String senha = new String(txtSenha.getPassword());
+            String confirmSenha = new String(txtConfirmSenha.getPassword());
 
-                if (!senha.equals(confirmSenha)) {
-                    JOptionPane.showMessageDialog(TelaCadastroUsuario.this,
-                            "Senha e confirmação não conferem.",
-                            "Erro no Cadastro",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                usuarioController.cadastrarUsuario(username, senha);
-
-                /*
+            if (!senha.equals(confirmSenha)) {
                 JOptionPane.showMessageDialog(TelaCadastroUsuario.this,
-                        "Usuário cadastrado com sucesso.",
-                        "Cadastro Realizado",
-                        JOptionPane.INFORMATION_MESSAGE);
-                */
-
-                TelaLogin telaLogin = new TelaLogin();
-                telaLogin.setVisible(true);
-                dispose();
+                        "Senha e confirmação não conferem.",
+                        "Erro no Cadastro",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            usuarioController.cadastrarUsuario(username, senha);
+            TelaLogin telaLogin = new TelaLogin();
+            telaLogin.setVisible(true);
+            dispose();
         });
 
-        btnVoltar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TelaLogin telaLogin = new TelaLogin();
-                telaLogin.setVisible(true);
-                dispose();
-            }
+        btnVoltar.addActionListener(e -> {
+            TelaLogin telaLogin = new TelaLogin();
+            telaLogin.setVisible(true);
+            dispose();
         });
     }
 

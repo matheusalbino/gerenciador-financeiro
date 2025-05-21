@@ -1,4 +1,5 @@
 package org.example.dao.singletonImpl;
+
 import org.example.dao.UsuarioDAO;
 import org.example.model.Usuario;
 import org.example.singleton.UsuarioSingleton;
@@ -31,7 +32,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     @Override
     public Usuario buscarPorNome(String username) {
         for (Usuario usuario : UsuarioSingleton.getInstance().getUsuarios()) {
-            System.out.println(usuario.getLogin());
             if (usuario.getLogin().equals(username)) {
                 return usuario;
             }

@@ -1,7 +1,6 @@
 package org.example.dao.singletonImpl;
 
 import org.example.dao.TransacaoDAO;
-import org.example.model.Filtro;
 import org.example.model.Transacao;
 import org.example.singleton.TransacaoSingleton;
 
@@ -40,6 +39,11 @@ public class TransacaoDAOImpl implements TransacaoDAO {
             }
         }
         return null;
+    }
+
+    @Override
+    public int buscarUltimaTransacao(){
+        return TransacaoSingleton.getInstance().getTransacoes().size();
     }
 
 }

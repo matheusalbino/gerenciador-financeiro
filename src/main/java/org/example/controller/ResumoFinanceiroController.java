@@ -8,7 +8,6 @@ import org.example.service.UsuarioServiceImpl;
 import org.example.util.ValidarEntrada;
 
 import javax.swing.*;
-import java.text.ParseException;
 import java.util.Date;
 
 public class ResumoFinanceiroController {

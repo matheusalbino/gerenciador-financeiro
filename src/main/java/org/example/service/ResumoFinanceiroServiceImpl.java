@@ -1,16 +1,14 @@
 package org.example.service;
 
 import org.example.dao.TransacaoDAO;
-import org.example.dao.singletonImpl.TransacaoDAOImpl;
+import org.example.factory.DAOFactory;
 import org.example.model.ResumoFinanceiro;
 import org.example.model.Transacao;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
-    TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
+    private final TransacaoDAO transacaoDAO = DAOFactory.getTransacaoDAO();
 
     @Override
     public ResumoFinanceiro gerarResumo(int userID) {
@@ -25,7 +23,7 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
     @Override
     public ResumoFinanceiro gerarResumo(int userID, Date dataInicio, Date dataFinal) {
         List<Transacao> transacoes = transacaoDAO.buscarTransacoesDeUsuario(userID);
-        List<Transacao> transacoesFiltradas = new ArrayList<>();
+
         if (transacoes.isEmpty()){
             return new ResumoFinanceiro(userID, 0, 0, 0);
         }
@@ -48,7 +46,7 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
     public double totalEntradas(List<Transacao> transacoes) {
         double totalEntradas = 0;
         for (Transacao transacao : transacoes) {
-            if (transacao.getTipo().getText() == "RECEITA") {
+            if (transacao.getTipo().getText().equals("RECEITA")) {
                 totalEntradas += transacao.getValor();
             }
         }
@@ -60,7 +58,7 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
     public double totalDespesas(List<Transacao> transacoes) {
         double totalDespesas = 0;
         for (Transacao transacao : transacoes) {
-            if (transacao.getTipo().getText() == "DESPESA") {
+            if (transacao.getTipo().getText().equals("DESPESA")) {
                 totalDespesas += transacao.getValor();
             }
         }
@@ -72,6 +70,5 @@ public class ResumoFinanceiroServiceImpl implements ResumoFinanceiroService {
     public double saldoAtual(double totalEntradas, double totalDespesas) {
         return totalEntradas - totalDespesas;
     }
-
 
 }

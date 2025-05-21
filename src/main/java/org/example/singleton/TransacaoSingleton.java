@@ -1,7 +1,6 @@
 package org.example.singleton;
 
 import org.example.model.Transacao;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +13,11 @@ public class TransacaoSingleton {
     }
 
     public static synchronized TransacaoSingleton getInstance() {
+
         if (instancia == null) {
             instancia = new TransacaoSingleton();
         }
+
         return instancia;
     }
 

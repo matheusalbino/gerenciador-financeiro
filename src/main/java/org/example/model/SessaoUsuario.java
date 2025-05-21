@@ -28,10 +28,6 @@ public class SessaoUsuario {
         return id;
     }
 
-    public void setID(int id){
-        this.id = id;
-    }
-
     public int getIdUsuario() {
         return idUsuario;
     }

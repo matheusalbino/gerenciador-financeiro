@@ -11,15 +11,14 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class TelaResumoFinanceiro extends JPanel {
-    private ResumoFinanceiroController resumoController = new ResumoFinanceiroController();
+    private final ResumoFinanceiroController resumoController = new ResumoFinanceiroController();
 
-    private JLabel lblSaldoTotal;
-    private JLabel lblTotalCreditos;
-    private JLabel lblTotalDebitos;
+    private final JLabel lblSaldoTotal;
+    private final JLabel lblTotalCreditos;
+    private final JLabel lblTotalDebitos;
 
-    private JTextField txtDataInicio;
-    private JTextField txtDataFim;
-    private JButton btnAtualizarResumo;
+    private final JTextField txtDataInicio;
+    private final JTextField txtDataFim;
 
     public TelaResumoFinanceiro() {
         setLayout(new BorderLayout(10, 10));
@@ -36,7 +35,7 @@ public class TelaResumoFinanceiro extends JPanel {
         txtDataFim = new JTextField(10);
         painelFiltro.add(txtDataFim);
 
-        btnAtualizarResumo = new JButton("Atualizar Resumo");
+        JButton btnAtualizarResumo = new JButton("Atualizar Resumo");
         painelFiltro.add(btnAtualizarResumo);
 
         JPanel painelResumoWrapper = new JPanel(new GridBagLayout());

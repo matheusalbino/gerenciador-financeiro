@@ -30,15 +30,6 @@ public class UsuarioController {
         }
     }
 
-    public void removerUsuario(int idUsuario){
-        usuarioService.removerUsuario(idUsuario);
-    }
-
-    public Usuario buscarUsuarioPorID(int idUsuario){
-        ValidarEntrada.validarInt(idUsuario, "Id usuário não permitido");
-
-        return usuarioService.buscarUsuarioPorID(idUsuario);
-    }
 
     public void logoutUsuario(){
         usuarioService.logOutUsuario();
@@ -46,11 +37,6 @@ public class UsuarioController {
 
     public Usuario buscarUsuarioLogado(){
         return usuarioService.getUsuarioLogado();
-    }
-
-    public Usuario buscarUsuarioPorUsername(String username){
-        ValidarEntrada.validarStringNuloOuVazia(username, "Insira um username");
-        return usuarioService.buscarUsuarioPorNome(username);
     }
 
     public Usuario Login (String username, String senha){

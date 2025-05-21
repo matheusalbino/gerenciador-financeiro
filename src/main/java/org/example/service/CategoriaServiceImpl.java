@@ -1,18 +1,16 @@
 package org.example.service;
 
 import org.example.dao.*;
-import org.example.dao.singletonImpl.CategoriaDAOImpl;
-import org.example.dao.singletonImpl.TransacaoDAOImpl;
-import org.example.dao.singletonImpl.UsuarioDAOImpl;
+import org.example.factory.DAOFactory;
 import org.example.model.Categoria;
 import org.example.model.Transacao;
-
 import java.util.List;
+import java.util.Objects;
 
 public class CategoriaServiceImpl implements CategoriaService {
-    UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
-    private final CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
-    private final TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
+
+    private final CategoriaDAO categoriaDAO = DAOFactory.getCategoriaDAO();
+    private final TransacaoDAO transacaoDAO = DAOFactory.getTransacaoDAO();
 
 
     @Override
@@ -35,7 +33,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         List<Transacao> transacoesUsuario = transacaoDAO.buscarTransacoesDeUsuario(idUsuario);
 
         for (Transacao transacao : transacoesUsuario) {
-            if (transacao.getCategoria().getNome() == categoria.getNome()) {
+            if (Objects.equals(transacao.getCategoria().getNome(), categoria.getNome())) {
                 throw new IllegalArgumentException("Não é possível deletar categorias que já estão sendo usadas em alguma transação");
             }
         }
@@ -55,19 +53,10 @@ public class CategoriaServiceImpl implements CategoriaService {
         categoriaDAO.editarCategoria(categoria, nome, descricao);
     }
 
-
     @Override
     public List<Categoria> listarCategoriasDeUsuario(int idUsuario) {
-
-        List<Categoria> categorias = categoriaDAO.listarCategoriasDeUsuario(idUsuario);
-
-        if (categorias == null || categorias.isEmpty()) {
-            throw new IllegalArgumentException("Usuario sem categorias");
-        }
-
-        return categorias;
+        return categoriaDAO.listarCategoriasDeUsuario(idUsuario);
     }
-
 
     @Override
     public Categoria buscarCategoriaPorNome(String nomeCategoria, int idUsuario) {
@@ -78,16 +67,10 @@ public class CategoriaServiceImpl implements CategoriaService {
         return null;
     }
 
-
     @Override
     public int ultimaCategoria(int idUsuario) {
-        List<Categoria> listaCategorias = categoriaDAO.listarCategoriasDeUsuario(idUsuario);
+        return categoriaDAO.ultimaCategoria();
 
-        if (listaCategorias.isEmpty()) {
-            return 0;
-        }
-
-        return listaCategorias.getLast().getId();
     }
 
     @Override

@@ -1,19 +1,16 @@
 package org.example.service;
 
 import org.example.dao.*;
-import org.example.dao.singletonImpl.CategoriaDAOImpl;
-import org.example.dao.singletonImpl.TransacaoDAOImpl;
-import org.example.dao.singletonImpl.UsuarioDAOImpl;
+import org.example.factory.DAOFactory;
 import org.example.model.Categoria;
 import org.example.model.Transacao;
 import org.example.model.Usuario;
-
 import java.util.List;
 
 public class UsuarioServiceImpl implements UsuarioService {
-    UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
-    TransacaoDAO transacaoDAO = new TransacaoDAOImpl();
-    CategoriaDAO categoriaDAO = new CategoriaDAOImpl();
+    UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
+    private final CategoriaDAO categoriaDAO = DAOFactory.getCategoriaDAO();
+    private final TransacaoDAO transacaoDAO = DAOFactory.getTransacaoDAO();
 
     @Override
     public void registrarUsuario(Usuario usuario) {
@@ -40,17 +37,16 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new IllegalArgumentException("ID de usuario não encontrado");
         }
 
-        // buscar as categorias e transações do usuario a ser removido
         List<Transacao> transacoesUsuario = transacaoDAO.buscarTransacoesDeUsuario(idUsuarioARemover);
         List<Categoria> categoriasUsuario = categoriaDAO.listarCategoriasDeUsuario(idUsuarioARemover);
 
-        if (transacoesUsuario != null) {
+        if (!transacoesUsuario.isEmpty()) {
             for (Transacao transacao : transacoesUsuario) {
                 transacaoDAO.removerTransacao(transacao);
             }
         }
 
-        if (categoriasUsuario != null) {
+        if (!categoriasUsuario.isEmpty()) {
             for (Categoria categoria : categoriasUsuario) {
                 categoriaDAO.removerCategoria(categoria);
             }
@@ -61,14 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario buscarUsuarioPorNome(String username) {
-        Usuario usuario = usuarioDAO.buscarPorNome(username);
-
-        if (usuario == null) {
-            // throw new IllegalArgumentException("Username não encontrado");
-            return null;
-        }
-
-        return usuario;
+        return usuarioDAO.buscarPorNome(username);
     }
 
     @Override
@@ -95,16 +84,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         this.usuarioDAO.logarUsuario(usuario);
+
         return usuario;
     }
 
     @Override
     public void logOutUsuario(){
+
         if (this.getUsuarioLogado() == null){
             throw new IllegalArgumentException("Usuario não encontrado");
         }
+
         usuarioDAO.logoutUsuario();
-        System.out.println("Logout de usuario");
     }
 
     @Override
@@ -115,9 +106,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario getUsuarioLogado() {
         Usuario usuario = this.usuarioDAO.getUsuarioLogado();
+
         if (usuario == null){
             throw new IllegalArgumentException("Nenhum usuario logado");
         }
+
         return usuario;
     }
 

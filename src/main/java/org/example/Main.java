@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
 
-        DAOFactory.configurar(TipoPersistencia.MEMORIA);
+        DAOFactory.configurar(TipoPersistencia.BANCO);
 
         SwingUtilities.invokeLater(() -> {
             TelaLogin telaLogin = new TelaLogin();
